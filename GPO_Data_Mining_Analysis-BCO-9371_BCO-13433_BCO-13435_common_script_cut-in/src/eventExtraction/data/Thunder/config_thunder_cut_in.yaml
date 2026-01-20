@@ -1,0 +1,43 @@
+SATA:
+  cTime: mudp.SATA_SPP_OTP_VEH.header.time
+  moving_target_ID_SATA: mudp.SATA_SPP_OTP_VEH.UDP_SATA_Stream.data.accMovingTracks.track_id
+Feature:
+  ALC_type_feature_enum: mudp.Feature_10ms.LC_ACC_Stream.LC_Status
+  cTime: mudp.Feature_10ms.header.time
+
+host:
+  cTime: mudp.VSE.header.time
+  host_heading_angle_rad: ''
+  host_lateral_acceleration_mps2: mudp.VSE.vse_out.raw_lat_accel
+  host_lateral_velocity_mps: mudp.VSE.vse_out.vcs_lat_velocity
+  host_longitudinal_acceleration_mps2: mudp.VSE.vse_out.raw_long_accel
+  host_longitudinal_velocity_mps: mudp.VSE.vse_out.vcs_long_velocity
+  host_width_m: mudp.VSE.rtZVehicle_Par.KsVSE_m_VehWidth
+  host_yaw_rate_rps: mudp.VSE.vse_out.raw_yaw_rate_rps
+target:
+  cTime: mudp.Object_Fusion.header.time
+  target_ID: mudp.Object_Fusion.UDP_fus_objects.Fus.Fusion_output.reduced_id
+  target_heading_rad_VCS: mudp.Object_Fusion.UDP_fus_objects.Fus.Fusion_output.vcs_heading
+  target_lateral_acceleration_mps2_VCS: mudp.Object_Fusion.UDP_fus_objects.Fus.Fusion_output.vcs_lataccel
+  target_lateral_position_m_VCS: mudp.Object_Fusion.UDP_fus_objects.Fus.Fusion_output.vcs_latposn
+  target_lateral_velocity_mps_VCS: mudp.Object_Fusion.UDP_fus_objects.Fus.Fusion_output.vcs_latvel
+  target_length_m: mudp.Object_Fusion.UDP_fus_objects.Fus.Fusion_output.length
+  target_longitudinal_acceleration_mps2_VCS: mudp.Object_Fusion.UDP_fus_objects.Fus.Fusion_output.vcs_longaccel
+  target_longitudinal_position_m_VCS: mudp.Object_Fusion.UDP_fus_objects.Fus.Fusion_output.vcs_longposn
+  target_longitudinal_velocity_mps_VCS: mudp.Object_Fusion.UDP_fus_objects.Fus.Fusion_output.vcs_longvel
+  target_width_m: mudp.Object_Fusion.UDP_fus_objects.Fus.Fusion_output.width
+  fusion_index: mudp.Object_Fusion.UDP_fus_objects.Fus.fusion_index
+vision:
+  cTime: mudp.AVI_Message.header.time
+  vision_host_lane_change: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Boundary.Crossing
+  vision_host_lane_parameters_C0: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Boundary.First_Segment.Polynom.C0
+  vision_host_lane_parameters_C1: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Boundary.First_Segment.Polynom.C1
+  vision_host_lane_parameters_C2: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Boundary.First_Segment.Polynom.C2
+  vision_host_lane_parameters_C3: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Boundary.First_Segment.Polynom.C3
+  vision_host_lane_side: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Lanemark.Role
+  vision_host_lane_width: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Header.VIS_LH_Estimated_Lane_Width
+  vision_host_signal_confidence: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Boundary.Existence_Probability
+  road_curvature: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Applications.VIS_LAP_PathPrediction.VIS_LAP_Path_Pred_First_Segment.C2
+  road_curvature_signal_confidence : mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Applications.VIS_LAP_PathPrediction.VIS_LAP_Path_Pred_Conf
+cTime_multiplier: 1E6
+

@@ -1,0 +1,138 @@
+Feature_10ms:
+    feature_avi_tsi_construction_area_enum : mudp.Feature_10ms.AVI_TSI_Stream.CA_Is_Construction_Area
+    feature_avi_tsi_host_lane_left_first_segment_C0 : mudp.Feature_10ms.AVI_TSI_Stream.LH_Left_FirstSegC0
+    feature_avi_tsi_host_lane_right_first_segment_C0 : mudp.Feature_10ms.AVI_TSI_Stream.LH_Right_FirstSegC0
+    feature_avi_tsi_vision_tsr_sign_count : mudp.Feature_10ms.AVI_TSI_Stream.VIS_TSR_Sign_Count
+    feature_avi_tsi_vision_tsr_sign_name : mudp.Feature_10ms.AVI_TSI_Stream.VIS_TSR_Sign_Name
+    feature_avi_tsi_vision_tsr_sign_height : mudp.Feature_10ms.AVI_TSI_Stream.VIS_TSR_Sign_Height
+    feature_avi_tsi_vision_tsr_lateral_distance_to_sign : mudp.Feature_10ms.AVI_TSI_Stream.VIS_TSR_Sign_Lat_Distance
+    feature_avi_tsi_vision_tsr_longitudinal_distance_to_sign : mudp.Feature_10ms.AVI_TSI_Stream.VIS_TSR_Sign_Long_Distance
+    feature_avi_tsi_vision_tsr_sign_confidence : mudp.Feature_10ms.AVI_TSI_Stream.VIS_TSR_Confidence
+    feature_avi_tsi_vision_tsr_sign_ID : mudp.Feature_10ms.AVI_TSI_Stream.VIS_TSR_ID
+    feature_avi_tsi_vision_tsr_sign_relevancy : mudp.Feature_10ms.AVI_TSI_Stream.VIS_TSR_Relevancy
+    feature_avi_tsi_vision_tsr_supp_sign_1_name : mudp.Feature_10ms.AVI_TSI_Stream.VIS_TSR_Sup1_SignName
+    feature_avi_tsi_vision_tsr_supp_sign_2_name : mudp.Feature_10ms.AVI_TSI_Stream.VIS_TSR_Sup2_SignName
+    feature_avi_tsi_vision_tsr_supp_sign_1_confidence : mudp.Feature_10ms.AVI_TSI_Stream.VIS_TSR_Sup1_Confidence
+    feature_avi_tsi_vision_tsr_supp_sign_2_confidence : mudp.Feature_10ms.AVI_TSI_Stream.VIS_TSR_Sup2_Confidence
+    feature_avi_tsi_vision_tsr_common_frame_MCU_start : mudp.Feature_10ms.AVI_TSI_Stream.COM_Frame_MCU_TS_Start
+    feature_vcan_IW_command_ignition_status : mudp.Feature_10ms.VCAN_IN_TSI_Stream.CmdIgnSts #vehicle_Controller_Area_Network
+    feature_vcan_IW_country_code : mudp.Feature_10ms.VCAN_IN_TSI_Stream.CountryCode
+    feature_vcan_IW_driving_side : mudp.Feature_10ms.VCAN_IN_TSI_Stream.DrvSide
+    feature_vcan_IW_external_temperature : mudp.Feature_10ms.VCAN_IN_TSI_Stream.ExternalTemperature
+    feature_vcan_IW_front_wiper_status : mudp.Feature_10ms.VCAN_IN_TSI_Stream.FrontWiperMoveSts
+    feature_vcan_IW_speed_units : mudp.Feature_10ms.VCAN_IN_TSI_Stream.SpdUnits
+    feature_vcan_IW_turn_indication_status : mudp.Feature_10ms.VCAN_IN_TSI_Stream.TurnIndicationSts
+    feature_vcan_IW_host_speed_VSO_signal : mudp.Feature_10ms.VCAN_IN_TSI_Stream.VehicleSpeedVSOSig
+    feature_vcan_IW_yaw_rate_bsm : mudp.Feature_10ms.VCAN_IN_TSI_Stream.YawRate_BSM
+    feature_vse_IW_trlr_detect_status : mudp.Feature_10ms.VSE_TSI_Stream.VeVSE_TrlrDetectSts
+    feature_vse_IW_compensated_yaw_rate_filtered_rps : mudp.Feature_10ms.VSE_TSI_Stream.comp_yaw_rate_filtered
+    feature_lc_IW_right_lane_marker_crossed_enum : mudp.Feature_10ms.LC_TSI_Stream.f_RLMCross #lateral_control
+    feature_lc_IW_left_lane_marker_crossed_enum : mudp.Feature_10ms.LC_TSI_Stream.f_LLMCross
+    feature_lc_IW_left_stop_IZ_max_crossed_enum : mudp.Feature_10ms.LC_TSI_Stream.f_LeftStopIZMaxCross
+    feature_lc_IW_right_stop_IZ_max_crossed_enum : mudp.Feature_10ms.LC_TSI_Stream.f_RightStopIZMaxCross
+    feature_nvm_tsr_sign_speed_limit_enum : mudp.Feature_10ms.NVM_TSI_Stream.TSI_SignSpeedLimit_FromKA
+    feature_nvm_tsr_sign_speed_limit_fused_enum : mudp.Feature_10ms.NVM_TSI_Stream.TSI_SourceFusedSpdLmt_FromKA
+    feature_nvm_tsr_sign_country_code : mudp.Feature_10ms.NVM_TSI_Stream.TSI_CountryCode_FromKA
+    cTime : mudp.Feature_10ms.header.time
+Feature_20ms:
+    feature_tsi_OW_traffic_sign_recognition_status : mudp.Feature_20ms.TSI_OW_Stream.TSRSts
+    feature_tsi_OW_source_fused_speed_limit : mudp.Feature_20ms.TSI_OW_Stream.SourceFusedSpeedLimit
+    feature_tsi_OW_vehicle_speed_limit_sign_enum : mudp.Feature_20ms.TSI_OW_Stream.SignVehicleSpeedLimit
+    feature_tsi_OW_vehicle_speed_limit_conditional_sign_enum : mudp.Feature_20ms.TSI_OW_Stream.SignVehicleSpeedLimitConditional
+    feature_tsi_OW_overtaking_sign_enum : mudp.Feature_20ms.TSI_OW_Stream.SignOvertaking
+    feature_tsi_OW_vehicle_speed_limit_supp_sign_enum : mudp.Feature_20ms.TSI_OW_Stream.SignSupplemVehicleSpeedLimit
+    feature_tsi_OW_speed_units_cam : mudp.Feature_20ms.TSI_OW_Stream.SpdUnits_Cam
+    feature_tsi_OW_speed_limit_sign_shape_enum : mudp.Feature_20ms.TSI_OW_Stream.Speed_Sign_Shape
+    feature_tsi_logging_in_speeding_zone_enum : mudp.Feature_20ms.TSI_Logging_Stream.f_InSpdZone
+    feature_tsi_logging_fused_unrestricted_speed_limit_enum : mudp.Feature_20ms.TSI_Logging_Stream.fusedUSLvalue
+    feature_tsi_logging_fused_conditional_speed_limit_enum : mudp.Feature_20ms.TSI_Logging_Stream.fusedCSLvalue
+    feature_tsi_logging_fused_supp_sign_type_enum : mudp.Feature_20ms.TSI_Logging_Stream.fusedSuppType
+    feature_tsi_logging_road_work_enum : mudp.Feature_20ms.TSI_Logging_Stream.f_InRoadWork
+    feature_tsi_logging_gray_out_unrestricted_speed_limit_enum : mudp.Feature_20ms.TSI_Logging_Stream.f_grayOut_USL
+    feature_tsi_logging_gray_out_conditional_speed_limit_enum : mudp.Feature_20ms.TSI_Logging_Stream.f_grayOut_CSL
+    feature_tsi_logging_new_unrestricted_speed_limit_enum : mudp.Feature_20ms.TSI_Logging_Stream.f_newUSL
+    feature_tsi_logging_new_conditional_speed_limit_enum : mudp.Feature_20ms.TSI_Logging_Stream.f_newCSL
+    feature_tsi_logging_scene_change_enum : mudp.Feature_20ms.TSI_Logging_Stream.f_sceneChange
+    feature_tsi_logging_update_unrestricted_speed_limit_enum : mudp.Feature_20ms.TSI_Logging_Stream.f_updateUSL
+    feature_tsi_logging_update_conditional_speed_limit_enum : mudp.Feature_20ms.TSI_Logging_Stream.f_updateCSL
+    cTime : mudp.Feature_20ms.header.time
+host:
+  cTime: mudp.VSE.header.time
+  host_heading_angle_rad: ''
+  host_lateral_acceleration_mps2: mudp.VSE.vse_out.raw_lat_accel
+  host_lateral_velocity_mps: mudp.VSE.vse_out.vcs_lat_velocity
+  host_longitudinal_acceleration_mps2: mudp.VSE.vse_out.raw_long_accel
+  host_longitudinal_velocity_mps: mudp.VSE.vse_out.vcs_long_velocity
+  host_width_m: mudp.VSE.rtZVehicle_Par.KsVSE_m_VehWidth
+  host_yaw_rate_rps: mudp.VSE.vse_out.raw_yaw_rate_rps
+# target:
+  # cTime: mudp.Object_Fusion.header.time
+  # target_ID: mudp.Object_Fusion.UDP_fus_objects.Fus.Fusion_output.reduced_id
+  # target_heading_rad_VCS: mudp.Object_Fusion.UDP_fus_objects.Fus.Fusion_output.vcs_heading
+  # target_lateral_acceleration_mps2_VCS: mudp.Object_Fusion.UDP_fus_objects.Fus.Fusion_output.vcs_lataccel
+  # target_lateral_position_m_VCS: mudp.Object_Fusion.UDP_fus_objects.Fus.Fusion_output.vcs_latposn
+  # target_lateral_velocity_mps_VCS: mudp.Object_Fusion.UDP_fus_objects.Fus.Fusion_output.vcs_latvel
+  # target_length_m: mudp.Object_Fusion.UDP_fus_objects.Fus.Fusion_output.length
+  # target_longitudinal_acceleration_mps2_VCS: mudp.Object_Fusion.UDP_fus_objects.Fus.Fusion_output.vcs_longaccel
+  # target_longitudinal_position_m_VCS: mudp.Object_Fusion.UDP_fus_objects.Fus.Fusion_output.vcs_longposn
+  # target_longitudinal_velocity_mps_VCS: mudp.Object_Fusion.UDP_fus_objects.Fus.Fusion_output.vcs_longvel
+  # target_width_m: mudp.Object_Fusion.UDP_fus_objects.Fus.Fusion_output.width
+  # fusion_index: mudp.Object_Fusion.UDP_fus_objects.Fus.fusion_index
+vision_avi_wrapper:
+  cTime: mudp.AVI_Message.header.time
+  vision_avi_tsr_MCU_TS_frame_start : mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Traffic_Signs.VIS_TSR_Header.VIS_TSR_Common_Header.Frame_MCU_TS_Start
+  vision_avi_tsr_algo_frame_ID : mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Traffic_Signs.VIS_TSR_Header.VIS_TSR_Common_Header.Algo_Frame_ID
+  vision_avi_tsr_sign_count : mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Traffic_Signs.VIS_TSR_Header.VIS_TSR_Sign_Count
+  vision_avi_tsr_sign_ID_name : mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Traffic_Signs.VIS_TSR_Element.VIS_TSR_ID
+  vision_avi_tsr_sign_name : mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Traffic_Signs.VIS_TSR_Element.VIS_TSR_Sign_Name
+  vision_avi_tsr_sign_confidence : mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Traffic_Signs.VIS_TSR_Element.VIS_TSR_Confidence
+  vision_avi_tsr_sign_longitudinal_distance : mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Traffic_Signs.VIS_TSR_Element.VIS_TSR_Sign_Long_Distance
+  vision_avi_tsr_sign_existence_probability : mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Traffic_Signs.VIS_TSR_Element.VIS_TSR_Existence_Probability
+  vision_avi_tsr_supp_sign_1_name : mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Traffic_Signs.VIS_TSR_Element.VIS_TSR_Sup1_SignName
+  vision_avi_tsr_supp_sign_1_confidence : mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Traffic_Signs.VIS_TSR_Element.VIS_TSR_Sup1_Confidence
+  vision_avi_tsr_supp_sign_2_name : mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Traffic_Signs.VIS_TSR_Element.VIS_TSR_Sup2_SignName
+  vision_avi_tsr_supp_sign_2_confidence : mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Traffic_Signs.VIS_TSR_Element.VIS_TSR_Sup2_Confidence
+  vision_avi_tsr_day_time_indicator : mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Common.VIS_COM_Header.VIS_COM_DayTime_Indicator
+  vision_avi_tsr_FS_rain : mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Failsafe.VIS_Failsafe_Header.VIS_FS_Rain
+  vision_avi_tsr_FS_fog : mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Failsafe.VIS_Failsafe_Header.VIS_FS_Fog
+  vision_avi_tsr_camera_frame_ID : mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Traffic_Signs.VIS_TSR_Header.VIS_TSR_Common_Header.Cam_Frame_ID
+  # vision_host_lane_change: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Boundary.Crossing
+  # vision_host_lane_parameters_C0: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Boundary.First_Segment.Polynom.C0
+  # vision_host_lane_parameters_C1: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Boundary.First_Segment.Polynom.C1
+  # vision_host_lane_parameters_C2: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Boundary.First_Segment.Polynom.C2
+  # vision_host_lane_parameters_C3: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Boundary.First_Segment.Polynom.C3
+  # vision_host_lane_side: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Lanemark.Role
+  # vision_host_lane_width: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Header.VIS_LH_Estimated_Lane_Width
+  # vision_host_signal_confidence: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Boundary.Existence_Probability
+  # road_curvature: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Applications.VIS_LAP_PathPrediction.VIS_LAP_Path_Pred_First_Segment.C2
+  # road_curvature_signal_confidence : mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Applications.VIS_LAP_PathPrediction.VIS_LAP_Path_Pred_Conf
+vision_tsr_camera:
+    cTime : SPI_eyeQ.Core_DS_Traffic_Signs_protocol.Core_DS_Traffic_Signs_protocol.timestamp
+    vision_camera_tsr_sign_name : SPI_eyeQ.Core_DS_Traffic_Signs_protocol.Core_DS_Traffic_Signs_protocol.DSTSR_Sign_Name
+    vision_camera_tsr_sign_height : SPI_eyeQ.Core_DS_Traffic_Signs_protocol.Core_DS_Traffic_Signs_protocol.DSTSR_Sign_Height
+    vision_camera_tsr_sign_lateral_distance : SPI_eyeQ.Core_DS_Traffic_Signs_protocol.Core_DS_Traffic_Signs_protocol.DSTSR_Sign_Lat_Distance
+    vision_camera_tsr_sign_longitudinal_distance : SPI_eyeQ.Core_DS_Traffic_Signs_protocol.Core_DS_Traffic_Signs_protocol.DSTSR_Sign_Long_Distance
+    vision_camera_tsr_sign_confidence : SPI_eyeQ.Core_DS_Traffic_Signs_protocol.Core_DS_Traffic_Signs_protocol.DSTSR_Confidence
+    vision_camera_tsr_sign_ID : SPI_eyeQ.Core_DS_Traffic_Signs_protocol.Core_DS_Traffic_Signs_protocol.DSTSR_ID
+    vision_camera_tsr_sign_relevancy : SPI_eyeQ.Core_DS_Traffic_Signs_protocol.Core_DS_Traffic_Signs_protocol.DSTSR_Relevancy
+    vision_camera_tsr_supp_sign_1_name : SPI_eyeQ.Core_DS_Traffic_Signs_protocol.Core_DS_Traffic_Signs_protocol.DSTSR_Sup1_SignName
+    vision_camera_tsr_supp_sign_2_name : SPI_eyeQ.Core_DS_Traffic_Signs_protocol.Core_DS_Traffic_Signs_protocol.DSTSR_Sup2_SignName
+    vision_camera_tsr_supp_sign_1_confidence : SPI_eyeQ.Core_DS_Traffic_Signs_protocol.Core_DS_Traffic_Signs_protocol.DSTSR_Sup1_Confidence
+    vision_camera_tsr_supp_sign_2_confidence : SPI_eyeQ.Core_DS_Traffic_Signs_protocol.Core_DS_Traffic_Signs_protocol.DSTSR_Sup2_Confidence
+    vision_camera_tsr_sign_existence_probability : SPI_eyeQ.Core_DS_Traffic_Signs_protocol.Core_DS_Traffic_Signs_protocol.DSTSR_Existence_Probability
+    vision_camera_tsr_sync_ID : SPI_eyeQ.Core_DS_Traffic_Signs_protocol.Core_DS_Traffic_Signs_protocol.DSTSR_Sync_ID
+vision_common_camera:
+    cTime : SPI_eyeQ.Core_Common_protocol.Core_Common_protocol.timestamp
+    vision_camera_common_frame_ID : SPI_eyeQ.Core_Common_protocol.Core_Common_protocol.COM_EyeQ_Frame_ID
+    vision_camera_common_sync_ID : SPI_eyeQ.Core_Common_protocol.Core_Common_protocol.COM_Sync_Frame_ID
+    vision_camera_common_road_type : SPI_eyeQ.Core_Common_protocol.Core_Common_protocol.COM_Road_Type   
+gps:
+  cTime: mcip.swift_nav_gps.geodetic_position.cTime
+  geodetic_latitude_deg : mcip.swift_nav_gps.geodetic_position.lat
+  geodetic_longitude_deg : mcip.swift_nav_gps.geodetic_position.lon
+    
+cTime_multiplier: 1E6
+main_signs_enums_path_linux : /mnt/usmidet/projects/STLA-THUNDER/7-Tools/DMA_Venv/TSI_extraction/main_signs_enums.yml
+supplemental_signs_enums_path_linux : /mnt/usmidet/projects/STLA-THUNDER/7-Tools/DMA_Venv/TSI_extraction/supplemental_enums.yml
+main_signs_enums_path_windows : C:\Users\mfixlz\OneDrive - Aptiv\Documents\DM_A\PO_Vinay\Projects\2025\BCO-14362\TSI\src\Thunder_KPI\TSI_extraction\main_signs_enums.yml
+supplemental_signs_enums_path_windows : C:\Users\mfixlz\OneDrive - Aptiv\Documents\DM_A\PO_Vinay\Projects\2025\BCO-14362\TSI\src\Thunder_KPI\TSI_extraction\supplemental_enums.yml

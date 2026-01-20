@@ -1,0 +1,13 @@
+
+*.mat
+*.dbc
+*.arxml
+src/eventExtraction/data/Thunder/Trimble_GPS/trimble_udp_messages_def.yaml
+src/eventExtraction/utils/signal_extraction_srr.py
+*.json
+src/eventExtraction/utils/signal_extraction_beta.py
+*.pyc
+**/__pycache__/
+/src/eventExtraction/utils/__pycache__
+*.pyc
+.vs/GPO_Data_Mining_Analysis/v17/workspaceFileList.bin

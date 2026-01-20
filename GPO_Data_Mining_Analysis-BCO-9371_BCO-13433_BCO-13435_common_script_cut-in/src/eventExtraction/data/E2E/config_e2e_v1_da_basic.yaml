@@ -1,0 +1,41 @@
+host:
+  cTime: mudp.vse.vse_l2p.header.time
+  host_heading_angle_rad: ''
+  host_lateral_jerk_mps3: mudp.vse.vse_l2p.lateral_jerk
+  host_lateral_acceleration_mps2: mudp.vse.vse_l2p.raw_lat_accel
+  host_lateral_velocity_mps: mudp.vse.vse_l2p.vcs_lat_velocity
+  host_lateral_jerk_mps3: mudp.vse.vse_l2p.longitudinal_jerk
+  host_longitudinal_acceleration_mps2: mudp.vse.vse_l2p.raw_long_accel
+  host_longitudinal_velocity_mps: mudp.vse.vse_l2p.vcs_long_velocity
+  host_yaw_rate_rps: mudp.vse.vse_l2p.raw_yaw_rate_rps
+  host_steering_angle_deg: mudp.vse.vse_l2p.raw_steering_angle_deg
+
+udp_DA:
+    cTime: mudp.others.src035_sid000_str232.header.time
+    udp_drive_mode: mudp.others.src035_sid000_str232.drive_mode.acc_state
+    udp_ACC_status: mudp.others.src035_sid000_str232.acc_status.state
+    udp_ACC_override: mudp.others.src035_sid000_str232.acc_status.is_overridden
+    udp_ALC_status: mudp.others.src035_sid000_str232.alc_status.alc_state
+    udp_ALC_turn_indicator_status: mudp.others.src035_sid000_str232.alc_status.turn_command
+    udp_steering_override: mudp.others.src035_sid000_str232.debug_data.driver_override_steering_internal
+    udp_brake_override : mudp.others.src035_sid000_str232.debug_data.driver_override_break_pedal
+vision_avi_wrapper:
+    cTime: mudp.avi.flc.tsr.header.time
+    vision_avi_tsr_camera_stream_ref_index : mudp.avi.flc.tsr.header.streamRefIndex
+    vision_avi_tsr_camera_stream_transmission_count : mudp.avi.flc.tsr.header.streamTxCnt
+can_DA:
+  cTime: can.vcanDataSpeed.DriverAssist_Report.cTime
+  can_ACC_status: can.vcanDataSpeed.DriverAssist_Report.ACCE
+can_misc:
+  cTime: can.vcanDataSpeed.Misc_Command.cTime
+  can_vehicle_turn_indicator_status: can.vcanDataSpeed.Misc_Command.TRNCMD
+can_steering:
+  cTime: can.vcanDataSpeed.Steering_Report.cTime
+  can_steering_angle: can.vcanDataSpeed.Steering_Report.ANGLE
+  can_steering_override: can.vcanDataSpeed.Steering_Report.Steering_Report_OVERRIDE
+  can_steering_engaged: can.vcanDataSpeed.Steering_Report.Steering_Report_EN
+can_braking:
+  cTime: can.vcanDataSpeed.Brake_Report.cTime
+  can_PI_torque: can.vcanDataSpeed.Brake_Report.PI_TORQUE
+  can_brake_override: can.vcanDataSpeed.Brake_Report.Brake_Report_OVERRIDE
+cTime_multiplier: 1E6

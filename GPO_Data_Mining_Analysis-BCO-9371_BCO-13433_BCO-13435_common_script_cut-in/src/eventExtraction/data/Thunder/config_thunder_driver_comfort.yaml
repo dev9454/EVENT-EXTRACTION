@@ -1,0 +1,33 @@
+host:
+  cTime: mudp.VSE.header.time
+  host_heading_angle_rad: ''
+  host_lateral_jerk_mps3: mudp.VSE.vse_out.lateral_jerk
+  host_lateral_acceleration_mps2: mudp.VSE.vse_out.raw_lat_accel
+  host_lateral_velocity_mps: mudp.VSE.vse_out.vcs_lat_velocity
+  host_longitudinal_jerk_mps3: ''
+  host_longitudinal_acceleration_mps2: mudp.VSE.vse_out.raw_long_accel
+  host_longitudinal_velocity_mps: mudp.VSE.vse_out.vcs_long_velocity
+  host_vertical_jerk_mps3: ''
+  host_vertical_acceleration_mps2: ''
+  host_vertical_velocity_mps: ''
+  host_width_m: mudp.VSE.rtZVehicle_Par.KsVSE_m_VehWidth
+  host_yaw_rate_rps: mudp.VSE.vse_out.raw_yaw_rate_rps
+vision:
+  cTime: mudp.AVI_Message.header.time
+  vision_host_lane_change: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Boundary.Crossing
+  vision_host_lane_parameters_C0: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Boundary.First_Segment.Polynom.C0
+  vision_host_lane_parameters_C1: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Boundary.First_Segment.Polynom.C1
+  vision_host_lane_parameters_C2: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Boundary.First_Segment.Polynom.C2
+  vision_host_lane_parameters_C3: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Boundary.First_Segment.Polynom.C3
+  vision_host_lane_side: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Lanemark.Role
+  vision_host_lane_width: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Header.VIS_LH_Estimated_Lane_Width
+  vision_host_signal_confidence: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Host.VIS_LH_Element.VIS_LH_Boundary.Existence_Probability
+  road_curvature: mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Applications.VIS_LAP_PathPrediction.VIS_LAP_Path_Pred_First_Segment.C2
+  road_curvature_signal_confidence : mudp.AVI_Message.AVI_Message_Buffer.tmpAVI_Lanes_Applications.VIS_LAP_PathPrediction.VIS_LAP_Path_Pred_Conf
+cTime_multiplier: 1E6
+# events_dict:
+    # event_extraction_output_xlsx_path: ''
+    # cTime_col : ''
+    # log_path_col : ''
+    # log_name_col : ''
+
