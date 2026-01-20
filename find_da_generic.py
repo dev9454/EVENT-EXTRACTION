@@ -18,13 +18,13 @@ if "win" in sys.platform:
     import joblib
 
     sys.path.insert(
-        0, r'C:\Users\mfixlz\OneDrive - Aptiv\Documents\DM_A\PO_Chaitanya_K\Projects\GPO Data Mining Analysis\GPO_Data_Mining_Analysis\src')
+        0, r'C:/Users/thho0g\Downloads/TEST/EVENT-EXTRACTION/GPO_Data_Mining_Analysis/src')
 
 else:
     package_path_NA = \
-        r'/mnt/usmidet/projects/STLA-THUNDER/7-Tools/DMA_Venv/CES_related/GPO_event_extraction/GPO_Data_Mining_Analysis/src'
+        r'C:/Users/thho0g\Downloads/TEST/EVENT-EXTRACTION/GPO_Data_Mining_Analysis/src'
     package_path_EU = \
-        r"/net/8k3/e0fs01/irods/PLKRA-PROJECTS/STRADVISION/8-Users/DMA_Team/mfixlz/GPO_data_mining_project_GITLAB/GPO_Data_Mining_Analysis/src"
+        r"C:/Users/thho0g\Downloads/TEST/EVENT-EXTRACTION/GPO_Data_Mining_Analysis/src"
 
     package_path = package_path_NA
     if (os.path.isdir(package_path_NA,)
@@ -268,7 +268,7 @@ class FindDaGeneric:
         #                                                      _resim_path_to_orig_path,
         #                                                      )
 
-        from eventExtraction.utils.utils_generic import (_list_of_dicts_to_dict_of_arrays,
+        from GPO_Data_Mining_Analysis.src.eventExtraction.utils.utils_generic import (_list_of_dicts_to_dict_of_arrays,
                                                          _write_gifs_to_excel,
                                                          _resim_path_to_orig_path,
                                                          )
@@ -547,8 +547,8 @@ class FindDaGeneric:
                                      )
 
             # sys.path.insert(0, root_path)
-            from eventExtraction.da.core_da import coreEventExtractionDA
-            from eventExtraction.utils.utils_generic import (_list_of_dicts_to_dict_of_arrays,
+            from GPO_Data_Mining_Analysis.src.eventExtraction.da.core_da import coreEventExtractionDA
+            from GPO_Data_Mining_Analysis.src.eventExtraction.utils.utils_generic import (_list_of_dicts_to_dict_of_arrays,
                                                              _write_gifs_to_excel,
                                                              _resim_path_to_orig_path,
                                                              loadmat,
@@ -570,9 +570,9 @@ class FindDaGeneric:
             #                          'GPO_Data_Mining_Analysis',
             #                          'src',)
             # sys.path.insert(0, root_path)
-            from eventExtraction.da.core_da import coreEventExtractionDA
+            from GPO_Data_Mining_Analysis.src.eventExtraction.da.core_da import coreEventExtractionDA
             # from eventExtraction.tsi.signal_mapping_tsi import signalMapping
-            from eventExtraction.utils.utils_generic import (_list_of_dicts_to_dict_of_arrays,
+            from GPO_Data_Mining_Analysis.src.eventExtraction.utils.utils_generic  import (_list_of_dicts_to_dict_of_arrays,
                                                              _write_gifs_to_excel,
                                                              _resim_path_to_orig_path,
                                                              loadmat,
@@ -581,7 +581,7 @@ class FindDaGeneric:
                                                              )
         import pickle
 
-        from eventExtraction.utils.utils_generic import create_mysql_engine_fn
+        from GPO_Data_Mining_Analysis.src.eventExtraction.utils.utils_generic  import create_mysql_engine_fn
 
         try:
 
