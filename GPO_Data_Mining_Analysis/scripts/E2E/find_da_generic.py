@@ -10,6 +10,22 @@ import contextlib
 import re
 from pathlib import Path
 
+import sys
+import os
+from pathlib import Path
+
+# 1. Dynamically find the path to the 'src' directory
+# Assumes script is in: GPO_Data_Mining_Analysis/scripts/E2E/
+current_script_path = Path(__file__).resolve()
+# .parents[1] goes from E2E -> scripts -> GPO_Data_Mining_Analysis
+project_root = current_script_path.parents[1] 
+package_path = str(project_root / "src")
+
+# 2. Add to sys.path
+if package_path not in sys.path:
+    sys.path.insert(0, package_path)
+
+# 2. Apply platform-specific logic and update sys.path
 if "win" in sys.platform:
     print('platform : ', sys.platform)
     from joblib import Parallel, delayed, parallel_backend, parallel_config
@@ -17,32 +33,22 @@ if "win" in sys.platform:
     import contextlib
     import joblib
 
-    sys.path.insert(
-        0, r'C:\Users\mfixlz\OneDrive - Aptiv\Documents\DM_A\PO_Chaitanya_K\Projects\GPO Data Mining Analysis\GPO_Data_Mining_Analysis\src')
+    if package_path not in sys.path:
+        sys.path.insert(0, package_path)
 
 else:
-    package_path_NA = \
-        r'/mnt/usmidet/projects/STLA-THUNDER/7-Tools/DMA_Venv/CES_related/GPO_event_extraction/GPO_Data_Mining_Analysis/src'
-    package_path_EU = \
-        r"/net/8k3/e0fs01/irods/PLKRA-PROJECTS/STRADVISION/8-Users/DMA_Team/mfixlz/GPO_data_mining_project_GITLAB/GPO_Data_Mining_Analysis/src"
-
-    package_path = package_path_NA
-    if (os.path.isdir(package_path_NA,)
-        and os.access(package_path_NA, os.R_OK)
-        and os.access(package_path_NA, os.W_OK)
-        and os.access(package_path_NA, os.X_OK)
+    # Linux/HPC validation logic
+    if (os.path.isdir(package_path)
+            and os.access(package_path, os.R_OK)
+            and os.access(package_path, os.W_OK)
+            and os.access(package_path, os.X_OK)
         ):
-
-        package_path = package_path_NA
-
-    elif (os.path.isdir(package_path_EU,)
-          and os.access(package_path_EU, os.R_OK)
-          and os.access(package_path_EU, os.W_OK)
-          and os.access(package_path_EU, os.X_OK)
-          ):
-
-        package_path = package_path_EU
-    sys.path.insert(0, package_path)
+        if package_path not in sys.path:
+            sys.path.insert(0, package_path)
+    else:
+        # Fallback to insert path even if strict permissions check fails
+        if os.path.isdir(package_path) and package_path not in sys.path:
+            sys.path.insert(0, package_path)
 
 
 ###########################################################################
@@ -82,9 +88,9 @@ class FindDaGeneric:
 
         venv_path = venv_path_NA
         if (os.access(venv_path_NA, os.F_OK)
-            and os.access(venv_path_NA, os.R_OK)
-            and os.access(venv_path_NA, os.W_OK)
-            and os.access(venv_path_NA, os.X_OK)
+                and os.access(venv_path_NA, os.R_OK)
+                and os.access(venv_path_NA, os.W_OK)
+                and os.access(venv_path_NA, os.X_OK)
             ):
 
             venv_path = venv_path_NA
@@ -128,6 +134,7 @@ class FindDaGeneric:
             'log_name_event_start',
             'log_name_event_end',
             'remarks',
+            'nexus_event_type',
         ]
 
         self._headers['output_overview'] = [
@@ -206,12 +213,22 @@ class FindDaGeneric:
     ###########################################################################
 
     def kpi_sheet_generation(self, output_excel_sheet):
-
         from statsmodels.stats.stattools import medcouple
         import pandas as pd
         import numpy as np
         import sys
+        import os
         import re
+        from pathlib import Path
+
+        # 1. Dynamically find the src directory relative to this script
+        # Assuming script is in GPO_Data_Mining_Analysis/scripts/E2E/
+        current_script_path = Path(__file__).resolve()
+        package_path = str(current_script_path.parents[2] / "src")
+
+        # 2. Add to sys.path if not already present
+        if package_path not in sys.path:
+            sys.path.insert(0, package_path)
 
         if "win" in sys.platform:
             print('platform : ', sys.platform)
@@ -219,34 +236,18 @@ class FindDaGeneric:
             from tqdm import tqdm
             import contextlib
             import joblib
-
-            sys.path.insert(
-                0, r'C:\Users\mfixlz\OneDrive - Aptiv\Documents\DM_A\PO_Chaitanya_K\Projects\GPO Data Mining Analysis\GPO_Data_Mining_Analysis\src')
-
+            # Hardcoded sys.path.insert removed as package_path is handled above
         else:
-            package_path_NA = \
-                r'/mnt/usmidet/projects/STLA-THUNDER/7-Tools/DMA_Venv/CES_related/GPO_event_extraction/GPO_Data_Mining_Analysis/src'
-            package_path_EU = \
-                r"/net/8k3/e0fs01/irods/PLKRA-PROJECTS/STRADVISION/8-Users/DMA_Team/mfixlz/GPO_data_mining_project_GITLAB/GPO_Data_Mining_Analysis/src"
-
-            package_path = package_path_NA
-            if (os.path.isdir(package_path_NA,)
-                and os.access(package_path_NA, os.R_OK)
-                and os.access(package_path_NA, os.W_OK)
-                and os.access(package_path_NA, os.X_OK)
+            # 3. Linux/HPC permission validation using the dynamic path
+            if (os.path.isdir(package_path)
+                    and os.access(package_path, os.R_OK)
+                    and os.access(package_path, os.W_OK)
+                    and os.access(package_path, os.X_OK)
                 ):
-
-                package_path = package_path_NA
-
-            elif (os.path.isdir(package_path_EU,)
-                  and os.access(package_path_EU, os.R_OK)
-                  and os.access(package_path_EU, os.W_OK)
-                  and os.access(package_path_EU, os.X_OK)
-                  ):
-
-                package_path = package_path_EU
-            sys.path.insert(0, package_path)
-
+                # Path is valid and has correct permissions
+                pass 
+            else:
+                print(f"Warning: Permissions check failed or directory missing at {package_path}")
         # if "lin" in sys.platform:
         #     sys.path.insert(
         #         0, r'/mnt/usmidet/projects/STLA-THUNDER/7-Tools/DMA_Venv/CES_related/GPO_event_extraction/GPO_Data_Mining_Analysis/src')
@@ -404,7 +405,9 @@ class FindDaGeneric:
 
         if self.multi_col_kpi:
 
-            turn_counts = df.groupby(
+            turn_counts = df.query(
+                f'{event_type_col} == "Turn_status" ' +
+                f'and {turn_status_col} != "No Turn" ').groupby(
                 [turn_status_col,
                  turn_indicator_presence_col])[turn_status_col].count()
 
@@ -447,7 +450,10 @@ class FindDaGeneric:
 
         else:
 
-            turn_counts = df[turn_status_col].value_counts(
+            turn_counts = df.query(
+                f'{event_type_col} == "Turn_status" ' +
+                f'and {turn_status_col} != "No Turn" ')[
+                    turn_status_col].value_counts(
                 normalize=False,
                 sort=True,
                 ascending=False,
@@ -508,401 +514,564 @@ class FindDaGeneric:
         if "win" in sys.platform:
 
             return req_output
-
+    
     def _run_helper(self, file_name, is_continuous=False,  **kwargs):
-        ###########################################################################
-
-        ###########################################################################
-        # ADD A BRIEF DESCRIPTION OF THE LOGIC USED IN THIS SCRIPT HERE
-        # ALONG WITH INPUT PARAMS IF ANY OTHER THAN THE MAT FILE
-        ## Mandatory details for th script ##
         """
-        Description: Write briefly about your script
-        Input to the script: filelist with file names
-        Input file type: .mat or .mudp
-        Output of the script: Excel sheet with events
-
+        Description: Main execution helper for DA event extraction.
+        Input: file_name (str or list), is_continuous (bool), program (str in kwargs)
+        Output: Dictionary containing 'output_data_da' DataFrame or Array.
         """
         import pandas as pd
         import numpy as np
         import warnings
-        warnings.filterwarnings("ignore")
-        ###########################################################################
-
-        ###########################################################################
-        # DO NOT REMOVE THE "TRY" STATEMENT
-        if "lin" in sys.platform:
-
-            root_path = os.path.join(r'/mnt/usmidet/projects/STLA-THUNDER',
-                                     r'7-Tools/DMA_Venv/CES_related',
-                                     'GPO_event_extraction',
-                                     'GPO_Data_Mining_Analysis',
-                                     'src',
-                                     )
-
-            # sys.path.insert(0, root_path)
-            from eventExtraction.da.core_da import coreEventExtractionDA
-            from eventExtraction.utils.utils_generic import (_list_of_dicts_to_dict_of_arrays,
-                                                             _write_gifs_to_excel,
-                                                             _resim_path_to_orig_path,
-                                                             loadmat,
-                                                             _create_flat_file_list,
-                                                             _create_base_name_list_from_file_list,
-                                                             )
-            kwargs['config_path'] = os.path.join(root_path,
-                                                 'eventExtraction',
-                                                 'data',
-                                                 kwargs['program'],
-                                                 self.program_config_name_map[
-                                                     kwargs['program'].lower()])
-
-        elif "win" in sys.platform:
-            print('****************', os.getcwd())
-            # root_path = os.path.join(r'C:\Users\mfixlz',
-            #                          r'OneDrive - Aptiv\Documents\DM_A\PO_Chaitanya_K',
-            #                          r'Projects\GPO Data Mining Analysis',
-            #                          'GPO_Data_Mining_Analysis',
-            #                          'src',)
-            # sys.path.insert(0, root_path)
-            from eventExtraction.da.core_da import coreEventExtractionDA
-            # from eventExtraction.tsi.signal_mapping_tsi import signalMapping
-            from eventExtraction.utils.utils_generic import (_list_of_dicts_to_dict_of_arrays,
-                                                             _write_gifs_to_excel,
-                                                             _resim_path_to_orig_path,
-                                                             loadmat,
-                                                             _create_flat_file_list,
-                                                             _create_base_name_list_from_file_list,
-                                                             )
+        import sys
+        import os
         import pickle
+        from pathlib import Path
+        warnings.filterwarnings("ignore")
 
-        from eventExtraction.utils.utils_generic import create_mysql_engine_fn
+        # 1. DYNAMIC PATH SETUP
+        # Automatically find the 'src' directory relative to this script
+        # Assumes structure: GPO_Data_Mining_Analysis/scripts/E2E/find_da_generic.py
+        current_script_path = Path(__file__).resolve()
+        project_root = current_script_path.parents[2] 
+        src_path = str(project_root / "src")
+
+        if src_path not in sys.path:
+            sys.path.insert(0, src_path)
+
+        # Determine the root path for data/config lookups
+        if "lin" in sys.platform:
+            # Fallback for HPC if the dynamic path doesn't exist, otherwise use dynamic
+            root_path = src_path if os.path.exists(src_path) else r'/mnt/usmidet/projects/STLA-THUNDER/7-Tools/DMA_Venv/CES_related/GPO_event_extraction/GPO_Data_Mining_Analysis/src'
+        else:
+            root_path = src_path
+
+        # 2. DYNAMIC CONFIG PATH
+        program_key = kwargs.get('program', 'e2e').lower()
+        config_file = self.program_config_name_map.get(program_key, 'config_e2e_v1_da_basic.yaml')
+        
+        if 'config_path' not in kwargs or not kwargs['config_path']:
+            kwargs['config_path'] = os.path.join(root_path, 'eventExtraction', 'data', kwargs.get('program', 'E2E'), config_file)
+
+        # 3. RELATIVE IMPORTS (Using the search path defined above)
+        from eventExtraction.da.core_da import coreEventExtractionDA
+        from eventExtraction.utils.utils_generic import (
+            _list_of_dicts_to_dict_of_arrays,
+            _write_gifs_to_excel,
+            _resim_path_to_orig_path,
+            loadmat,
+            _create_flat_file_list,
+            _create_base_name_list_from_file_list,
+            create_mysql_engine_fn
+        )
 
         try:
-
+            # CASE A: CONTINUOUS PROCESSING (File Lists)
             if is_continuous:
-
                 if isinstance(file_name, list):
-
                     file_name_list = file_name
-                    (log_path_list,
-                     base_name_list,
-                     rTag_list,
-                     seq_path_list,
-                     original_log_name_list) = _create_base_name_list_from_file_list(
-                        file_name_list)
-
+                    (log_path_list, base_name_list, rTag_list, seq_path_list, original_log_name_list) = \
+                        _create_base_name_list_from_file_list(file_name_list)
                 else:
-
-                    (file_name_list, base_name_list, rTag_list,
-                     seq_path_list, original_log_name_list) = \
-                        _create_flat_file_list(
-                            file_name,
-                            SIMULATE_LINUX=self.SIMULATE_LINUX)
+                    (file_name_list, base_name_list, rTag_list, seq_path_list, original_log_name_list) = \
+                        _create_flat_file_list(file_name, SIMULATE_LINUX=self.SIMULATE_LINUX)
 
                 if self.debug_win:
-
                     file_name_list = file_name_list[:1]
 
                 df_list = []
                 collect_cTime = True
 
-                for idx, (file_name_flat, basename,
-                          seq_path, orig_log_name) in enumerate(
-                        zip(file_name_list, base_name_list,
-                            seq_path_list, original_log_name_list)):
+                for idx, (file_name_flat, basename, seq_path, orig_log_name) in enumerate(
+                        zip(file_name_list, base_name_list, seq_path_list, original_log_name_list)):
 
                     log_path, log_name = os.path.split(file_name_flat)
-                    rTag = rTag_list[idx]
-
-                    if self.error_skip:
-
-                        try:
-
-                            mat_file_data = loadmat(file_name_flat)
-                            # TSI_signal_map_obj = signalMapping(mat_file_data)
-                            print('\n########## Object initialisation\n',
-                                  f'{log_name}')
-                            DA_core_logic_obj = coreEventExtractionDA(
-                                mat_file_data, file_name_flat)
-
-                            print('\n########## Signal interface mapping\n')
-                            out_df, enums_dict = DA_core_logic_obj._signal_mapping(
-                                kwargs['config_path'], log_name=log_name)
-
-                            if collect_cTime:
-                                start_cTime_sequence = np.array(
-                                    out_df['cTime'])[0]
-                                collect_cTime = False
-
-                            df_list.append(out_df)
-                        except Exception:
-                            exc_type, exc_obj, exc_tb = sys.exc_info()
-                            print('***************************',
-                                  f'Log at with name "{log_name}" is corrupt ',
-                                  f"or missing required streams as per {kwargs['config_path']}"
-                                  '\n skipping the log' +
-                                  f'\n logpath is : {file_name_flat}')
-                            print(str(exc_obj.args[0])
-                                  + " FOUND IN LINE: " + str(exc_tb.tb_lineno))
-                            continue
-                    else:
-                        print('\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n',
-                              f'COMPLETE FILE PATH : {file_name_flat}',
-                              '\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n')
+                    
+                    try:
+                        print(f'\n########## Processing Log: {log_name}')
                         mat_file_data = loadmat(file_name_flat)
-                        # TSI_signal_map_obj = signalMapping(mat_file_data)
-                        print('\n########## Object initialisation\n',
-                              f'{log_name}')
-                        DA_core_logic_obj = coreEventExtractionDA(
-                            mat_file_data, file_name_flat)
+                        DA_core_logic_obj = coreEventExtractionDA(mat_file_data, file_name_flat)
 
-                        print('\n########## Signal interface mapping\n')
-                        out_df, enums_dict = DA_core_logic_obj._signal_mapping(
-                            kwargs['config_path'], log_name=log_name)
+                        out_df, enums_dict = DA_core_logic_obj._signal_mapping(kwargs['config_path'], log_name=log_name)
 
                         if collect_cTime:
                             start_cTime_sequence = np.array(out_df['cTime'])[0]
                             collect_cTime = False
 
                         df_list.append(out_df)
+                    except Exception as e:
+                        if not self.error_skip: raise e
+                        print(f'*** Skipping corrupt log: {log_name}')
+                        continue
 
                 if not self.debug_win:
                     req_df = pd.concat(df_list, axis=0, ignore_index=True)
-
                     req_df['start_cTime_sequence'] = start_cTime_sequence
-
-                    req_df, misc_out_dict = \
-                        DA_core_logic_obj._process_signals(req_df,
-                                                           enums_dict)
-
+                    req_df, misc_out_dict = DA_core_logic_obj._process_signals(req_df, enums_dict)
                     DA_core_logic_obj.misc_out_dict = misc_out_dict
 
-                    if 'win' in sys.platform:
-
-                        req_path_pickle = os.path.join(r'C:\Users\mfixlz',
-                                                       r'OneDrive - Aptiv\Documents\DM_A\PO_Vinay',
-                                                       r'Projects\2025\KW52',
-                                                       'req_df_7.pkl')
-
-                        print('**********************************',
-                              req_path_pickle)
-
-                        with open(req_path_pickle, 'wb') as file:
-
-                            pickle.dump(req_df, file)
+                    # Save pickle to local working directory instead of OneDrive
+                    req_path_pickle = os.path.join(os.getcwd(), 'req_df_extraction_cache.pkl')
+                    with open(req_path_pickle, 'wb') as file:
+                        pickle.dump(req_df, file)
                 else:
+                    # In debug mode, attempt to load from local cache
+                    df_path = os.path.join(os.getcwd(), 'req_df_extraction_cache.pkl')
+                    if os.path.exists(df_path):
+                        with open(df_path, 'rb') as file:
+                            req_df = pickle.load(file)
+                    else:
+                        print("Debug cache not found, processing from scratch.")
+                        req_df = pd.concat(df_list, axis=0, ignore_index=True)
 
-                    # req_path_pickle = os.path.join(os.getcwd(), 'req_df_3.pkl')
-
-                    # print('**********************************',
-                    #       req_path_pickle)
-
-                    # with open(req_path_pickle, 'wb') as file:
-
-                    #     pickle.dump(req_df, file)
-
-                    df_path = os.path.join(r'C:\Users\mfixlz',
-                                           r'OneDrive - Aptiv\Documents\DM_A\PO_Vinay',
-                                           r'Projects\2025\KW52',
-                                           'req_df_7.pkl')
-                    with open(df_path, 'rb') as file:
-                        req_df = pickle.load(file)
-
-                # seq_name = '_'.join(log_name.split('.')[0].split('_')[:-2])
-                # seq_name = '_'.join(basename.split('_')[:-1])
-
-                # req_df['seq_name'] = seq_name
-                # FIXME: make it compatible for THUNDER
-                # seq_path = os.path.dirname(log_path)
-
-                # log_name = seq_name
-                # log_path = seq_path
-
-                # req_df['sequence_path'] = seq_path
-                # req_df['sequence_name'] = seq_name
-
-                # req_df['sequence_path'] = req_df['base_logname'].apply(
-                #     lambda x: os.path.join(seq_path, x))
-                # FIXME:
-                # if kwargs['program'].lower() == 'mcip':
-
-                #     req_df['sequence_path'] = req_df['base_logname'].apply(
-                #         lambda x: os.path.join(seq_path, x))
-                # elif kwargs['program'].lower() == 'thunder':
-
-                #     req_df['sequence_path'] = log_path
-
-                # if kwargs['program'].lower() == 'e2e':
-
-                #     req_df['sequence_path'] = req_df['base_logname'].apply(
-                #         lambda x: os.path.join(seq_path, x))
-
-                # req_df['readff_link'] = req_df[['sequence_path',
-                #                                 'orig_log_name_flat']].apply(
-                #     lambda x:
-                #         'https://readff-na.aptiv.com/vidFile/' +
-                #         f'{os.path.join(*Path(x["sequence_path"]).parts[3:])}/' +
-                #         '{}.MF4'.format(x["orig_log_name_flat"].split(".")[0].replace(
-                #             *self.readff_map_dict[
-                #                 self.program_name_readff_map[
-                #                     kwargs["program"].lower()]])), axis=1
-                # )
-
-                # req_df['readff_link_full_video'] = req_df[['sequence_path',
-                #                                            'orig_log_name_flat']].apply(
-                #     lambda x:
-                #         'https://readff-na.aptiv.com/files/' +
-                #         f'{os.path.join(*Path(x["sequence_path"]).parts[3:])}/' +
-                #         '{}.MF4'.format(x["orig_log_name_flat"].split(".")[0].replace(
-                #             *self.readff_map_dict[
-                #                 self.program_name_readff_map[
-                #                     kwargs["program"].lower()]])), axis=1
-                # )
-
-                # req_df['frame_ID'] = (
-                #     req_df['vision_avi_tsr_camera_frame_ID'] -
-                #     req_df['vision_avi_tsr_camera_frame_ID'].min(
-                #         skipna=True)
-                # )
                 req_df['event_signal'] = 'DA'
-                DA_core_logic_obj.program_name_readff_map = \
-                    self.program_name_readff_map[kwargs['program'].lower()]
-                # try:
-                #     DA_core_logic_obj.df_GT = \
-                #         pd.read_sql(f'SELECT * FROM {self.table_name_GT}',
-                #                     con=create_mysql_engine_fn())
-                # except:
-                #     print('Error with MySQL connection. GT values shall be nan')
-                #     DA_core_logic_obj.df_GT = pd.DataFrame()
+                DA_core_logic_obj.program_name_readff_map = self.program_name_readff_map[kwargs['program'].lower()]
+                return_val_dict = DA_core_logic_obj.event_extraction(req_df, **DA_core_logic_obj.kwargs_processing)
 
-                return_val_dict = DA_core_logic_obj.event_extraction(
-                    req_df,
-                    **DA_core_logic_obj.kwargs_processing)
-
+            # CASE B: SINGLE FILE PROCESSING
             else:
-
                 log_path, log_name = os.path.split(file_name)
-
                 mat_file_data = loadmat(file_name)
-                DA_core_logic_obj = coreEventExtractionDA(mat_file_data,
-                                                          file_name)
-                mat_file_data = None
+                DA_core_logic_obj = coreEventExtractionDA(mat_file_data, file_name)
+                mat_file_data = None # Free memory
 
-                out_df, enums_dict = DA_core_logic_obj._signal_mapping(
-                    kwargs['config_path'], log_name=log_name)
-
+                out_df, enums_dict = DA_core_logic_obj._signal_mapping(kwargs['config_path'], log_name=log_name)
                 start_cTime_sequence = np.array(out_df['cTime'])[0]
-
                 out_df['start_cTime_sequence'] = start_cTime_sequence
 
-                out_df, misc_out_dict = \
-                    DA_core_logic_obj._process_signals(out_df,
-                                                       enums_dict)
-
+                out_df, misc_out_dict = DA_core_logic_obj._process_signals(out_df, enums_dict)
                 DA_core_logic_obj.misc_out_dict = misc_out_dict
 
-                # seq_name = '_'.join(log_name.split('.')[0].split('_')[:-2])
-                # seq_name = '_'.join(basename.split('_')[:-1])
-
-                # out_df['seq_name'] = seq_name
-                # FIXME: make it compatible for THUNDER
-                # seq_path = os.path.dirname(log_path)
-
-                # log_name = seq_name
-                # log_path = seq_path
-
-                # if kwargs['program'].lower() == 'mcip':
-
-                #     out_df['sequence_path'] = out_df['base_logname'].apply(
-                #         lambda x: os.path.join(seq_path, x))
-                # elif kwargs['program'].lower() == 'thunder':
-
-                #     out_df['sequence_path'] = log_path
-
-                # out_df['readff_link'] = out_df[['sequence_path',
-                #                                 'orig_log_name_flat']].apply(
-                #     lambda x:
-                #         'https://readff-na.aptiv.com/vidFile/' +
-                #         f'{os.path.join(*Path(x["sequence_path"]).parts[4:])}/' +
-                #         '{}.MF4'.format(x["orig_log_name_flat"].split(".")[0].replace(
-                #             *self.readff_map_dict[
-                #                 self.program_name_readff_map[
-                #                     kwargs["program"].lower()]])), axis=1
-                # )
-
-                # out_df['readff_link_full_video'] = out_df[['sequence_path',
-                #                                            'orig_log_name_flat']].apply(
-                #     lambda x:
-                #         'https://readff-na.aptiv.com/files/' +
-                #         f'{os.path.join(*Path(x["sequence_path"]).parts[4:])}/' +
-                #         '{}.MF4'.format(x["orig_log_name_flat"].split(".")[0].replace(
-                #             *self.readff_map_dict[
-                #                 self.program_name_readff_map[
-                #                     kwargs["program"].lower()]])), axis=1
-                # )
-
-                # out_df['frame_ID'] = (
-                #     out_df['vision_avi_tsr_camera_stream_ref_index'] -
-                #     out_df['vision_avi_tsr_camera_stream_ref_index'].min(
-                #         skipna=True)
-                # )
-                # out_df['frame_ID'] = (
-                #     out_df['vision_avi_tsr_camera_frame_ID'] -
-                #     out_df['vision_avi_tsr_camera_frame_ID'].min(
-                #         skipna=True)
-                # )
-                # out_df['frame_ID'] = np.array([
-                #     f_id
-                #     for f_id in range(
-                #         len(out_df[
-                #             'vision_avi_tsr_camera_frame_ID']))],
-                #     dtype=int)
                 out_df['event_signal'] = 'DA'
-                DA_core_logic_obj.program_name_readff_map = \
-                    self.program_name_readff_map[kwargs['program'].lower()]
+                DA_core_logic_obj.program_name_readff_map = self.program_name_readff_map[kwargs['program'].lower()]
 
-                return_val_dict = DA_core_logic_obj.event_extraction(
-                    out_df,
-                    **DA_core_logic_obj.kwargs_processing)
+                return_val_dict = DA_core_logic_obj.event_extraction(out_df, **DA_core_logic_obj.kwargs_processing)
 
+            # 4. PREPARE OUTPUT
             try:
-                return_val_df_udp_based = pd.DataFrame(
-                    return_val_dict.get('overall_UDP', {}))
-
+                return_val_df_udp_based = pd.DataFrame(return_val_dict.get('overall_UDP', {}))
             except:
-                print('***********************************',
-                      'uneven lengths in the output. Debug',
-                      '***********************************',)
-                return_val_df_udp_based = pd.DataFrame.from_dict(
-                    return_val_dict.get('overall_UDP', {}),
-                    orient='index')
-
-                return_val_df_udp_based = return_val_df_udp_based.transpose()
+                print('Handling uneven length output...')
+                return_val_df_udp_based = pd.DataFrame.from_dict(return_val_dict.get('overall_UDP', {}), orient='index').transpose()
 
             if not return_val_df_udp_based.empty:
-                return_val_df_udp_based = \
-                    return_val_df_udp_based[
-                        self._headers['output_data_da']]
+                # Filter by headers defined in __init__
+                valid_headers = [h for h in self._headers['output_data_da'] if h in return_val_df_udp_based.columns]
+                return_val_df_udp_based = return_val_df_udp_based[valid_headers]
 
             out_dict = dict()
-            if 'local' in kwargs and kwargs['local']:
-
+            if kwargs.get('local', False):
                 out_dict['output_data_da'] = return_val_df_udp_based
-
             else:
-
-                print('********** Writing values to dict')
-
-                out_dict['output_data_da'] = np.array(
-                    return_val_df_udp_based)
+                out_dict['output_data_da'] = np.array(return_val_df_udp_based)
 
             return out_dict
 
-        #######################################################################
-        # DO NOT CHANGE THIS PART
-        except Exception:
+        # Replace the return string at the end of _run_helper (around line 1050)
+        except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
-            return str(exc_obj.args[0]) + " FOUND IN LINE: " + str(exc_tb.tb_lineno)
+            error_msg = f"{str(e)} FOUND IN LINE: {str(exc_tb.tb_lineno)}"
+            print(f"CRITICAL ERROR: {error_msg}")
+            raise # This will stop the script and show you exactly what failed
+    # def _run_helper(self, file_name, is_continuous=False,  **kwargs):
+    #     ###########################################################################
+
+    #     ###########################################################################
+    #     # ADD A BRIEF DESCRIPTION OF THE LOGIC USED IN THIS SCRIPT HERE
+    #     # ALONG WITH INPUT PARAMS IF ANY OTHER THAN THE MAT FILE
+    #     ## Mandatory details for th script ##
+    #     """
+    #     Description: Write briefly about your script
+    #     Input to the script: filelist with file names
+    #     Input file type: .mat or .mudp
+    #     Output of the script: Excel sheet with events
+
+    #     """
+    #     import pandas as pd
+    #     import numpy as np
+    #     import warnings
+    #     import sys
+    #     import os
+    #     from pathlib import Path
+    #     import pickle
+    #     warnings.filterwarnings("ignore")
+    #     ###########################################################################
+
+    #     ###########################################################################
+    #     # DO NOT REMOVE THE "TRY" STATEMENT
+    #     if "lin" in sys.platform:
+
+    #         root_path = os.path.join(r'/mnt/usmidet/projects/STLA-THUNDER',
+    #                                  r'7-Tools/DMA_Venv/CES_related',
+    #                                  'GPO_event_extraction',
+    #                                  'GPO_Data_Mining_Analysis',
+    #                                  'src',
+    #                                  )
+
+    #         # sys.path.insert(0, root_path)
+    #         from GPO_Data_Mining_Analysis.src.eventExtraction.da.core_da import coreEventExtractionDA
+    #         from GPO_Data_Mining_Analysis.src.eventExtraction.utils.utils_generic import (_list_of_dicts_to_dict_of_arrays,
+    #                                                          _write_gifs_to_excel,
+    #                                                          _resim_path_to_orig_path,
+    #                                                          loadmat,
+    #                                                          _create_flat_file_list,
+    #                                                          _create_base_name_list_from_file_list,
+    #                                                          )
+    #         kwargs['config_path'] = os.path.join(root_path,
+    #                                              'eventExtraction',
+    #                                              'data',
+    #                                              kwargs['program'],
+    #                                              self.program_config_name_map[
+    #                                                  kwargs['program'].lower()])
+
+    #     elif "win" in sys.platform:
+    #         print('****************', os.getcwd())
+    #         # root_path = os.path.join(r'C:\Users\mfixlz',
+    #         #                          r'OneDrive - Aptiv\Documents\DM_A\PO_Chaitanya_K',
+    #         #                          r'Projects\GPO Data Mining Analysis',
+    #         #                          'GPO_Data_Mining_Analysis',
+    #         #                          'src',)
+    #         # sys.path.insert(0, root_path)
+    #         from GPO_Data_Mining_Analysis.src.eventExtraction.da.core_da import coreEventExtractionDA
+    #         # from eventExtraction.tsi.signal_mapping_tsi import signalMapping
+    #         from GPO_Data_Mining_Analysis.src.eventExtraction.utils.utils_generic  import (_list_of_dicts_to_dict_of_arrays,
+    #                                                          _write_gifs_to_excel,
+    #                                                          _resim_path_to_orig_path,
+    #                                                          loadmat,
+    #                                                          _create_flat_file_list,
+    #                                                          _create_base_name_list_from_file_list,
+    #                                                          )
+    #     import pickle
+
+    #     from GPO_Data_Mining_Analysis.src.eventExtraction.utils.utils_generic  import create_mysql_engine_fn
+
+    #     try:
+
+    #         if is_continuous:
+
+    #             if isinstance(file_name, list):
+
+    #                 file_name_list = file_name
+    #                 (log_path_list,
+    #                  base_name_list,
+    #                  rTag_list,
+    #                  seq_path_list,
+    #                  original_log_name_list) = _create_base_name_list_from_file_list(
+    #                     file_name_list)
+
+    #             else:
+
+    #                 (file_name_list, base_name_list, rTag_list,
+    #                  seq_path_list, original_log_name_list) = \
+    #                     _create_flat_file_list(
+    #                         file_name,
+    #                         SIMULATE_LINUX=self.SIMULATE_LINUX)
+
+    #             if self.debug_win:
+
+    #                 file_name_list = file_name_list[:1]
+
+    #             df_list = []
+    #             collect_cTime = True
+
+    #             for idx, (file_name_flat, basename,
+    #                       seq_path, orig_log_name) in enumerate(
+    #                     zip(file_name_list, base_name_list,
+    #                         seq_path_list, original_log_name_list)):
+
+    #                 log_path, log_name = os.path.split(file_name_flat)
+    #                 rTag = rTag_list[idx]
+
+    #                 if self.error_skip:
+
+    #                     try:
+
+    #                         mat_file_data = loadmat(file_name_flat)
+    #                         # TSI_signal_map_obj = signalMapping(mat_file_data)
+    #                         print('\n########## Object initialisation\n',
+    #                               f'{log_name}')
+    #                         DA_core_logic_obj = coreEventExtractionDA(
+    #                             mat_file_data, file_name_flat)
+
+    #                         print('\n########## Signal interface mapping\n')
+    #                         out_df, enums_dict = DA_core_logic_obj._signal_mapping(
+    #                             kwargs['config_path'], log_name=log_name)
+
+    #                         if collect_cTime:
+    #                             start_cTime_sequence = np.array(
+    #                                 out_df['cTime'])[0]
+    #                             collect_cTime = False
+
+    #                         df_list.append(out_df)
+    #                     except Exception:
+    #                         exc_type, exc_obj, exc_tb = sys.exc_info()
+    #                         print('***************************',
+    #                               f'Log at with name "{log_name}" is corrupt ',
+    #                               f"or missing required streams as per {kwargs['config_path']}"
+    #                               '\n skipping the log' +
+    #                               f'\n logpath is : {file_name_flat}')
+    #                         print(str(exc_obj.args[0])
+    #                               + " FOUND IN LINE: " + str(exc_tb.tb_lineno))
+    #                         continue
+    #                 else:
+    #                     print('\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n',
+    #                           f'COMPLETE FILE PATH : {file_name_flat}',
+    #                           '\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n')
+    #                     mat_file_data = loadmat(file_name_flat)
+    #                     # TSI_signal_map_obj = signalMapping(mat_file_data)
+    #                     print('\n########## Object initialisation\n',
+    #                           f'{log_name}')
+    #                     DA_core_logic_obj = coreEventExtractionDA(
+    #                         mat_file_data, file_name_flat)
+
+    #                     print('\n########## Signal interface mapping\n')
+    #                     out_df, enums_dict = DA_core_logic_obj._signal_mapping(
+    #                         kwargs['config_path'], log_name=log_name)
+
+    #                     if collect_cTime:
+    #                         start_cTime_sequence = np.array(out_df['cTime'])[0]
+    #                         collect_cTime = False
+
+    #                     df_list.append(out_df)
+
+    #             if not self.debug_win:
+    #                 req_df = pd.concat(df_list, axis=0, ignore_index=True)
+
+    #                 req_df['start_cTime_sequence'] = start_cTime_sequence
+
+    #                 req_df, misc_out_dict = \
+    #                     DA_core_logic_obj._process_signals(req_df,
+    #                                                        enums_dict)
+
+    #                 DA_core_logic_obj.misc_out_dict = misc_out_dict
+
+    #                 if 'win' in sys.platform:
+
+    #                     req_path_pickle = os.path.join(r'C:\Users\mfixlz',
+    #                                                    r'OneDrive - Aptiv\Documents\DM_A\PO_Vinay',
+    #                                                    r'Projects\2025\KW52',
+    #                                                    'req_df_8.pkl')
+
+    #                     print('**********************************',
+    #                           req_path_pickle)
+
+    #                     with open(req_path_pickle, 'wb') as file:
+
+    #                         pickle.dump(req_df, file)
+    #             else:
+
+    #                 # req_path_pickle = os.path.join(os.getcwd(), 'req_df_3.pkl')
+
+    #                 # print('**********************************',
+    #                 #       req_path_pickle)
+
+    #                 # with open(req_path_pickle, 'wb') as file:
+
+    #                 #     pickle.dump(req_df, file)
+
+    #                 df_path = os.path.join(r'C:\Users\mfixlz',
+    #                                        r'OneDrive - Aptiv\Documents\DM_A\PO_Vinay',
+    #                                        r'Projects\2025\KW52',
+    #                                        'req_df_8.pkl')
+    #                 with open(df_path, 'rb') as file:
+    #                     req_df = pickle.load(file)
+
+    #             # seq_name = '_'.join(log_name.split('.')[0].split('_')[:-2])
+    #             # seq_name = '_'.join(basename.split('_')[:-1])
+
+    #             # req_df['seq_name'] = seq_name
+    #             # FIXME: make it compatible for THUNDER
+    #             # seq_path = os.path.dirname(log_path)
+
+    #             # log_name = seq_name
+    #             # log_path = seq_path
+
+    #             # req_df['sequence_path'] = seq_path
+    #             # req_df['sequence_name'] = seq_name
+
+    #             # req_df['sequence_path'] = req_df['base_logname'].apply(
+    #             #     lambda x: os.path.join(seq_path, x))
+    #             # FIXME:
+    #             # if kwargs['program'].lower() == 'mcip':
+
+    #             #     req_df['sequence_path'] = req_df['base_logname'].apply(
+    #             #         lambda x: os.path.join(seq_path, x))
+    #             # elif kwargs['program'].lower() == 'thunder':
+
+    #             #     req_df['sequence_path'] = log_path
+
+    #             # if kwargs['program'].lower() == 'e2e':
+
+    #             #     req_df['sequence_path'] = req_df['base_logname'].apply(
+    #             #         lambda x: os.path.join(seq_path, x))
+
+    #             # req_df['readff_link'] = req_df[['sequence_path',
+    #             #                                 'orig_log_name_flat']].apply(
+    #             #     lambda x:
+    #             #         'https://readff-na.aptiv.com/vidFile/' +
+    #             #         f'{os.path.join(*Path(x["sequence_path"]).parts[3:])}/' +
+    #             #         '{}.MF4'.format(x["orig_log_name_flat"].split(".")[0].replace(
+    #             #             *self.readff_map_dict[
+    #             #                 self.program_name_readff_map[
+    #             #                     kwargs["program"].lower()]])), axis=1
+    #             # )
+
+    #             # req_df['readff_link_full_video'] = req_df[['sequence_path',
+    #             #                                            'orig_log_name_flat']].apply(
+    #             #     lambda x:
+    #             #         'https://readff-na.aptiv.com/files/' +
+    #             #         f'{os.path.join(*Path(x["sequence_path"]).parts[3:])}/' +
+    #             #         '{}.MF4'.format(x["orig_log_name_flat"].split(".")[0].replace(
+    #             #             *self.readff_map_dict[
+    #             #                 self.program_name_readff_map[
+    #             #                     kwargs["program"].lower()]])), axis=1
+    #             # )
+
+    #             # req_df['frame_ID'] = (
+    #             #     req_df['vision_avi_tsr_camera_frame_ID'] -
+    #             #     req_df['vision_avi_tsr_camera_frame_ID'].min(
+    #             #         skipna=True)
+    #             # )
+    #             req_df['event_signal'] = 'DA'
+    #             DA_core_logic_obj.program_name_readff_map = \
+    #                 self.program_name_readff_map[kwargs['program'].lower()]
+    #             # try:
+    #             #     DA_core_logic_obj.df_GT = \
+    #             #         pd.read_sql(f'SELECT * FROM {self.table_name_GT}',
+    #             #                     con=create_mysql_engine_fn())
+    #             # except:
+    #             #     print('Error with MySQL connection. GT values shall be nan')
+    #             #     DA_core_logic_obj.df_GT = pd.DataFrame()
+
+    #             return_val_dict = DA_core_logic_obj.event_extraction(
+    #                 req_df,
+    #                 **DA_core_logic_obj.kwargs_processing)
+
+    #         else:
+
+    #             log_path, log_name = os.path.split(file_name)
+
+    #             mat_file_data = loadmat(file_name)
+    #             DA_core_logic_obj = coreEventExtractionDA(mat_file_data,
+    #                                                       file_name)
+    #             mat_file_data = None
+
+    #             out_df, enums_dict = DA_core_logic_obj._signal_mapping(
+    #                 kwargs['config_path'], log_name=log_name)
+
+    #             start_cTime_sequence = np.array(out_df['cTime'])[0]
+
+    #             out_df['start_cTime_sequence'] = start_cTime_sequence
+
+    #             out_df, misc_out_dict = \
+    #                 DA_core_logic_obj._process_signals(out_df,
+    #                                                    enums_dict)
+
+    #             DA_core_logic_obj.misc_out_dict = misc_out_dict
+
+    #             # seq_name = '_'.join(log_name.split('.')[0].split('_')[:-2])
+    #             # seq_name = '_'.join(basename.split('_')[:-1])
+
+    #             # out_df['seq_name'] = seq_name
+    #             # FIXME: make it compatible for THUNDER
+    #             # seq_path = os.path.dirname(log_path)
+
+    #             # log_name = seq_name
+    #             # log_path = seq_path
+
+    #             # if kwargs['program'].lower() == 'mcip':
+
+    #             #     out_df['sequence_path'] = out_df['base_logname'].apply(
+    #             #         lambda x: os.path.join(seq_path, x))
+    #             # elif kwargs['program'].lower() == 'thunder':
+
+    #             #     out_df['sequence_path'] = log_path
+
+    #             # out_df['readff_link'] = out_df[['sequence_path',
+    #             #                                 'orig_log_name_flat']].apply(
+    #             #     lambda x:
+    #             #         'https://readff-na.aptiv.com/vidFile/' +
+    #             #         f'{os.path.join(*Path(x["sequence_path"]).parts[4:])}/' +
+    #             #         '{}.MF4'.format(x["orig_log_name_flat"].split(".")[0].replace(
+    #             #             *self.readff_map_dict[
+    #             #                 self.program_name_readff_map[
+    #             #                     kwargs["program"].lower()]])), axis=1
+    #             # )
+
+    #             # out_df['readff_link_full_video'] = out_df[['sequence_path',
+    #             #                                            'orig_log_name_flat']].apply(
+    #             #     lambda x:
+    #             #         'https://readff-na.aptiv.com/files/' +
+    #             #         f'{os.path.join(*Path(x["sequence_path"]).parts[4:])}/' +
+    #             #         '{}.MF4'.format(x["orig_log_name_flat"].split(".")[0].replace(
+    #             #             *self.readff_map_dict[
+    #             #                 self.program_name_readff_map[
+    #             #                     kwargs["program"].lower()]])), axis=1
+    #             # )
+
+    #             # out_df['frame_ID'] = (
+    #             #     out_df['vision_avi_tsr_camera_stream_ref_index'] -
+    #             #     out_df['vision_avi_tsr_camera_stream_ref_index'].min(
+    #             #         skipna=True)
+    #             # )
+    #             # out_df['frame_ID'] = (
+    #             #     out_df['vision_avi_tsr_camera_frame_ID'] -
+    #             #     out_df['vision_avi_tsr_camera_frame_ID'].min(
+    #             #         skipna=True)
+    #             # )
+    #             # out_df['frame_ID'] = np.array([
+    #             #     f_id
+    #             #     for f_id in range(
+    #             #         len(out_df[
+    #             #             'vision_avi_tsr_camera_frame_ID']))],
+    #             #     dtype=int)
+    #             out_df['event_signal'] = 'DA'
+    #             DA_core_logic_obj.program_name_readff_map = \
+    #                 self.program_name_readff_map[kwargs['program'].lower()]
+
+    #             return_val_dict = DA_core_logic_obj.event_extraction(
+    #                 out_df,
+    #                 **DA_core_logic_obj.kwargs_processing)
+
+    #         try:
+    #             return_val_df_udp_based = pd.DataFrame(
+    #                 return_val_dict.get('overall_UDP', {}))
+
+    #         except:
+    #             print('***********************************',
+    #                   'uneven lengths in the output. Debug',
+    #                   '***********************************',)
+    #             return_val_df_udp_based = pd.DataFrame.from_dict(
+    #                 return_val_dict.get('overall_UDP', {}),
+    #                 orient='index')
+
+    #             return_val_df_udp_based = return_val_df_udp_based.transpose()
+
+    #         if not return_val_df_udp_based.empty:
+    #             return_val_df_udp_based = \
+    #                 return_val_df_udp_based[
+    #                     self._headers['output_data_da']]
+
+    #         out_dict = dict()
+    #         if 'local' in kwargs and kwargs['local']:
+
+    #             out_dict['output_data_da'] = return_val_df_udp_based
+
+    #         else:
+
+    #             print('********** Writing values to dict')
+
+    #             out_dict['output_data_da'] = np.array(
+    #                 return_val_df_udp_based)
+
+    #         return out_dict
+
+    #     #######################################################################
+    #     # DO NOT CHANGE THIS PART
+    #     except Exception:
+    #         exc_type, exc_obj, exc_tb = sys.exc_info()
+    #         return str(exc_obj.args[0]) + " FOUND IN LINE: " + str(exc_tb.tb_lineno)
 
     def run(self, file_name, **kwargs):
 
@@ -975,13 +1144,14 @@ if __name__ == '__main__':
     from tqdm import tqdm
     import contextlib
     import joblib
-    from ray.util.joblib import register_ray
+    # from ray.util.joblib import register_ray # Comment out if ray is not installed
     from functools import reduce
     from datetime import datetime
-
-    warnings.filterwarnings("ignore")
+    from pathlib import Path
     import psutil
     import time
+
+    warnings.filterwarnings("ignore")
 
     def process_memory():
         process = psutil.Process(os.getpid())
@@ -996,112 +1166,108 @@ if __name__ == '__main__':
     start_time = time.time()
     mem_before_phy, mem_before_virtual = process_memory()
 
-    program = 'E2E'  # 'MCIP'  # 'Thunder'
-
+    program = 'E2E'  
     config_name = 'config_e2e_v1_da_basic.yaml'
 
+    # 1. DYNAMIC PATH RESOLUTION
+    current_script_path = Path(__file__).resolve()
+    PROJECT_ROOT = current_script_path.parents[2] # Points to GPO_Data_Mining_Analysis/
+
     if "win" in sys.platform:
-
+        print(f"Project Root Detected: {PROJECT_ROOT}")
+        
+        # 2. LOCAL DATA PATH (IGNITION CYCLE SETUP)
+        data_dir = PROJECT_ROOT / 'data' / program / 'extracted_data'
+        
+        # List all files belonging to the same ignition cycle here in order
         file_names = [
-
-            'SDV_E2EML_M16_20251229_111748_0001_p01.mat',
-
-
+            'SDV_E2EML_M16_20251122_180824_0000_merged.mat',
+            'SDV_E2EML_M16_20251122_180824_0001_merged.mat',
+            'SDV_E2EML_M16_20251122_180824_0002_merged.mat',
+            'SDV_E2EML_M16_20251122_180824_0003_merged.mat',
+            'SDV_E2EML_M16_20251122_180824_0004_merged.mat',
+            'SDV_E2EML_M16_20251122_180824_0005_merged.mat',
+            'SDV_E2EML_M16_20251122_180824_0006_merged.mat',
         ]
+        
+        # Convert the list of filenames into absolute path strings
+        file_name_paths = [str(data_dir / f) for f in file_names]
 
-        file_name_paths = [os.path.join(os.getcwd(),
-                                        'data',
-                                        file_name)
-                           for file_name in file_names
-                           ][0]
-
-        # cont_file_list_name = \
-        #     'ThunderMCIP_WS11656_20250805_084635_[0054]_p01.mat,3'
-
-        cont_file_list_name = \
-            'SDV_E2EML_M16_20251229_111748_[0000]_p01.mat, 19'
-
-        file_name_paths = os.path.join(os.getcwd(),
-                                       'data',
-                                       cont_file_list_name)
-
-        kwargs = {'local': True,
-                  'config_path': os.path.join(r'C:\Users\mfixlz',
-                                              r'OneDrive - Aptiv\Documents',
-                                              'DM_A',
-                                              'PO_Chaitanya_K',
-                                              r'Projects\GPO Data Mining Analysis',
-                                              'GPO_Data_Mining_Analysis',
-                                              'src',
-                                              'eventExtraction',
-                                              'data',
-                                              program,
-                                              config_name),
-                  'program': program,
-
-                  }
-    elif "lin" in sys.platform:
-
-        cont_file_list_name = \
-            'SDV_E2EML_M16_20251229_111748_[0000]_p01.mat, 19'
-
-        file_name_paths = os.path.join(r'/mnt/usmidet/projects/GPO-E2E',
-                                       r'9-Upload/KPI_Drives_KPI_Data/12292025',
-                                       r'M16/AIRT_111748_route_3_v0332',
-                                       r'SDV_E2EML_M16_20251229_111748_0000',
-                                       cont_file_list_name
-
-                                       )
-
-        root_path = os.path.join(r'/mnt/usmidet/projects/STLA-THUNDER',
-                                 r'7-Tools/DMA_Venv/CES_related',
-                                 'GPO_event_extraction',
-                                 'GPO_Data_Mining_Analysis',
-                                 'src',
-                                 )
+        # 3. DYNAMIC CONFIG PATH
+        local_config = str(PROJECT_ROOT / 'src' / 'eventExtraction' / 'data' / program / config_name)
 
         kwargs = {
-            # 'local': False,
-
+            'local': True,
             'program': program,
-
+            'config_path': local_config
         }
+        
+        print(f"Starting Ignition Cycle with {len(file_name_paths)} files.")
+        print(f"Using Config: {local_config}")
 
+    elif "lin" in sys.platform:
+        # Dynamic Linux path resolution (Example)
+        cont_file_list_name = 'SDV_E2EML_M16_20251229_111748_[0000]_p01.mat, 19'
+        file_name_paths = os.path.join('/mnt/usmidet/projects/GPO-E2E', '9-Upload/KPI_Drives_KPI_Data/12292025',
+                                       'M16/AIRT_111748_route_3_v0332', 'SDV_E2EML_M16_20251229_111748_0000', cont_file_list_name)
+        kwargs = {'program': program}
+
+    # 4. EXECUTION
     class_obj = FindDaGeneric()
-
+    # If file_name_paths is a list, the run method internally triggers continuous processing
     final_out = class_obj.run(file_name_paths, **kwargs)
 
-    date_time_extension = datetime.today().strftime('%Y%m%d_%H%M%S')
-    excel_name = f'output_udp_{date_time_extension}.xlsx'
-    excel_save_path = os.path.join(r'C:\Users\mfixlz\OneDrive - Aptiv',
-                                   r'Documents\DM_A\PO_Vinay\Projects\2025',
-                                   'KW52',
-                                   excel_name)
+    # 5. ERROR HANDLING
+    if isinstance(final_out, str):
+        print("\n" + "!"*30)
+        print(f"CRITICAL ERROR IN CYCLE EXTRACTION:\n{final_out}")
+        print("!"*30 + "\n")
+        sys.exit(1)
 
-    final_out['output_data_da'].to_excel(excel_save_path,
-                                         sheet_name='output_data_da',
-                                         index=False)
+    # --- 6. OUTPUT DIRECTORY SETUP ---
+    output_dir = PROJECT_ROOT / 'output'
+    os.makedirs(output_dir, exist_ok=True)
 
-    kpi_output = class_obj.kpi_sheet_generation(excel_save_path)
+    # --- 7. OUTPUT SAVING ---
+    # Define a base name for the cycle (using the first file name + suffix)
+    if isinstance(file_name_paths, list):
+        mat_base_name = Path(file_names[0]).stem + "_cycle"
+    else:
+        mat_base_name = Path(file_name_paths).stem 
+    
+    json_save_path = output_dir / f"{mat_base_name}.json"
+    excel_save_path = output_dir / f"{mat_base_name}.xlsx"
 
+    if 'output_data_da' in final_out:
+        # Save combined cycle results to JSON
+        final_out['output_data_da'].to_json(
+            json_save_path, 
+            orient='records', 
+            indent=4
+        )
+        print(f"Cycle JSON generated: {json_save_path}")
+        
+        # Save combined cycle results to Excel
+        final_out['output_data_da'].to_excel(
+            excel_save_path, 
+            sheet_name='output_data_da', 
+            index=False
+        )
+        print(f"Cycle Excel generated: {excel_save_path}")
+        
+        # 8. KPI GENERATION
+        try:
+            kpi_output = class_obj.kpi_sheet_generation(str(excel_save_path))
+        except Exception as e:
+            print(f"Warning: KPI sheet generation failed: {e}")
+    else:
+        print("Error: 'output_data_da' not found in cycle extraction output.")
+
+    # Performance Monitoring
     mem_after_phy, mem_after_virtual = process_memory()
-
     end_time = time.time()
     elapsed_time = secondsToStr(end_time-start_time)
     consumed_memory_phy = (mem_after_phy - mem_before_phy)*1E-6
-    consumed_memory_virtual = (
-        mem_after_virtual - mem_before_virtual)*1E-6
-
-    print(
-        f'&&&&&&&&&&&& Elapsed time is {elapsed_time} %%%%%%%%%%%%%%%%')
-    print(
-        f'&&&&&&&&&&&& Consumed physical memory MB is {consumed_memory_phy} %%%%%%%%%%%%%%%%')
-
-    print(
-        f'&&&&&&&&&&&& Consumed virtual memory MB is {consumed_memory_virtual} %%%%%%%%%%%%%%%%')
-
-
-##########################      END      ##################################
-
-
-# test the script and take extra argument
+    
+    print(f'Done! Total Cycle Elapsed time: {elapsed_time}')
+    print(f'Consumed physical memory: {consumed_memory_phy:.2f} MB')

@@ -6,88 +6,53 @@ Created on Fri Jan  5 12:08:59 2024
 """
 import sys
 import os
-from os import path
+from pathlib import Path
 import pandas as pd
 from collections import OrderedDict
 from operator import itemgetter
 import numpy as np
 import copy
 import scipy as sp
-
 import pickle
 import datetime
-
 import re
-from pathlib import Path
 from collections import Counter
 import itertools
 from itertools import groupby, accumulate, chain
-
 from geopy.distance import geodesic, lonlat, distance
-if __package__ is None:
 
-    print('Here at none package 1')
-    sys.path.insert(1, os.path.dirname(os.path.abspath(__file__)))
-    to_change_path = os.path.dirname(os.path.abspath(__file__))
-    actual_package_path = to_change_path
-    os.chdir(to_change_path)
-    print(f'Current dir 1: {os.getcwd()}, \n to change 1: {to_change_path}')
-    from signal_mapping_da import signalMapping
-    from get_signals_da import signalData
-    print('Here at none package 2')
-    sys.path.insert(1, os.path.dirname(
-        os.path.dirname(os.path.abspath(__file__))))
-    to_change_path = os.path.dirname(
-        os.path.dirname(os.path.abspath(__file__)))
-    os.chdir(to_change_path)
-    print(f'Current dir 2: {os.getcwd()}, to change 2: {to_change_path}')
-    from utils.utils_generic import (read_platform,
-                                     loadmat,
-                                     stream_check,
-                                     transform_df,
-                                     merge_pandas_df,
-                                     sort_list,
-                                     patch_asscalar,
-                                     _resim_path_to_orig_path,
-                                     merge_dicts,
-                                     is_monotonic,
-                                     find_ranges_in_iterable,
-                                     ndix_unique,
-                                     _time_duration_to_indices_length,
-                                     )
-    os.chdir(actual_package_path)
+# --- Dynamic Path Resolution ---
+# Get the absolute path of the directory containing this file
+CURRENT_DIR = Path(__file__).resolve().parent
+# Navigate up to the 'src' folder (assumes structure: src/eventExtraction/da/core_da.py)
+PROJECT_SRC = str(CURRENT_DIR.parents[1])
 
+# Add the 'src' directory to sys.path to enable package-style imports
+if PROJECT_SRC not in sys.path:
+    sys.path.insert(0, PROJECT_SRC)
 
-else:
+# Add the local directory to path to support sibling module imports
+if str(CURRENT_DIR) not in sys.path:
+    sys.path.insert(1, str(CURRENT_DIR))
 
-    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    to_change_path = os.path.dirname(os.path.abspath(__file__))
-    actual_package_path = to_change_path
-    os.chdir(to_change_path)
-    print(f'Current dir 1: {os.getcwd()}, to change 1: {to_change_path}')
-
-    from signal_mapping_da import signalMapping
-    from get_signals_da import signalData
-    # from .. import utils
-    sys.path.insert(0, os.path.dirname(
-        os.path.dirname(os.path.abspath(__file__))))
-    to_change_path = os.path.dirname(
-        os.path.dirname(os.path.abspath(__file__)))
-
-    os.chdir(to_change_path)
-    print(f'Current dir 2: {os.getcwd()}, to change 2: {to_change_path}')
-    from eventExtraction.utils.utils_generic import (read_platform, loadmat,
-                                                     stream_check, transform_df,
-                                                     merge_pandas_df, sort_list,
-                                                     patch_asscalar,
-                                                     _resim_path_to_orig_path,
-                                                     merge_dicts,
-                                                     is_monotonic,
-                                                     find_ranges_in_iterable,
-                                                     ndix_unique,
-                                                     _time_duration_to_indices_length,
-                                                     )
-    os.chdir(actual_package_path)
+# --- Standardized Imports ---
+from signal_mapping_da import signalMapping
+from get_signals_da import signalData
+from eventExtraction.utils.utils_generic import (
+    read_platform,
+    loadmat,
+    stream_check,
+    transform_df,
+    merge_pandas_df,
+    sort_list,
+    patch_asscalar,
+    _resim_path_to_orig_path,
+    merge_dicts,
+    is_monotonic,
+    find_ranges_in_iterable,
+    ndix_unique,
+    _time_duration_to_indices_length,
+)
     # from . import signal_mapping_aeb
 
 # class dummy(object):
@@ -241,6 +206,7 @@ class coreEventExtractionDA(signalData):
         pre_event_drive_mode_status_list = []
         event_drive_mode_status_list = []
         post_event_drive_mode_status_list = []
+        nexus_event_type_list = []
 
         for enum, event_start_end_groups_array_list in \
                 event_start_end_groups_dict.items():
@@ -612,6 +578,24 @@ class coreEventExtractionDA(signalData):
                 event_drive_mode_status_list.append(event_drive_mode_status)
                 post_event_drive_mode_status_list.append(
                     post_event_drive_mode_status)
+                # --- Nexus Event Type Mapping Logic ---
+                # Determine the Nexus type for each event in this group
+                nexus_types = []
+                for i in range(len(event_type_event_start)):
+                    e_type = event_type_event_start[i]
+                    a_status = alc_status_event[i]
+                    v_turn = vehicle_turn_status_event[i]
+                    
+                    if e_type == "DA_status" and a_status == "Lane change":
+                        nexus_types.append("DMA_LANE_CHANGE")
+                    elif e_type == "Turn_status" and v_turn == "left turn":
+                        nexus_types.append("DMA_LEFT_TURN")
+                    elif e_type == "Turn_status" and v_turn == "right turn":
+                        nexus_types.append("DMA_RIGHT_TURN")
+                    else:
+                        nexus_types.append("unknown")
+                
+                nexus_event_type_list.append(np.array(nexus_types))
 
         event_dict = {
             'log_path':
@@ -720,6 +704,11 @@ class coreEventExtractionDA(signalData):
             'remarks':
             np.hstack(min_median_max_yaw_rate_event_list)
             if bool(min_median_max_yaw_rate_event_list)
+            else np.array([]),
+            
+            'nexus_event_type':
+            np.hstack(nexus_event_type_list)
+            if bool(nexus_event_type_list)
             else np.array([]),
         }
 
@@ -838,14 +827,35 @@ class coreEventExtractionDA(signalData):
 
         }
 
-        overall_dict_UDP = pd.concat([pd.DataFrame(item)
+        # --- Fixed Mapping Logic at the end of _sign_extraction ---
+        overall_df_UDP = pd.concat([pd.DataFrame(item)
                                       for item in event_dict_UDP.values()],
-                                     axis=0).to_dict(orient='list')
+                                     axis=0, ignore_index=True)
 
+        # Initialize the column
+        overall_df_UDP['nexus_event_type'] = 'unknown'
+
+        # 1. Map Lane Changes (DA_status events where alc_status is 'Lane change')
+        lane_change_indices = overall_df_UDP.query(
+            'event_type == "DA_status" and alc_status == "Lane change"').index
+        overall_df_UDP.loc[lane_change_indices, 'nexus_event_type'] = 'DMA_LANE_CHANGE'
+
+        # 2. Map Left Turns (Turn_status events where vehicle_turn_status is 'left turn')
+        left_turn_indices = overall_df_UDP.query(
+            'event_type == "Turn_status" and vehicle_turn_status == "left turn"').index
+        overall_df_UDP.loc[left_turn_indices, 'nexus_event_type'] = 'DMA_LEFT_TURN'
+
+        # 3. Map Right Turns (Turn_status events where vehicle_turn_status is 'right turn')
+        right_turn_indices = overall_df_UDP.query(
+            'event_type == "Turn_status" and vehicle_turn_status == "right turn"').index
+        overall_df_UDP.loc[right_turn_indices, 'nexus_event_type'] = 'DMA_RIGHT_TURN'
+
+        # Convert back to list format for the final dictionary
+        overall_dict_UDP = overall_df_UDP.to_dict(orient='list')
         event_dict['overall_UDP'] = overall_dict_UDP
 
         return event_dict
-
+    
     def _events_from_col(self, column_name, df, is_feature: bool = False):
 
         # self.req_indices_len
@@ -1020,16 +1030,18 @@ class coreEventExtractionDA(signalData):
 
 
 if __name__ == '__main__':
-
     import warnings
     import os
-    from pathlib import Path
-    warnings.filterwarnings("ignore")
-
+    import sys
     import time
+    from pathlib import Path
     from functools import reduce
     import psutil
+    import pandas as pd
+    
+    warnings.filterwarnings("ignore")
 
+    # --- Helper Functions ---
     def secondsToStr(t):
         return "%d:%02d:%02d.%03d" % \
             reduce(lambda ll, b: divmod(ll[0], b) + ll[1:],
@@ -1040,57 +1052,48 @@ if __name__ == '__main__':
         mem_info = process.memory_info()
         return mem_info.rss, mem_info.vms
 
+    # --- Start Execution ---
     start_time = time.time()
     mem_before_phy, mem_before_virtual = process_memory()
-    program = 'E2E'  # 'MCIP'  # 'Thunder'  # 'Northstar'
-    # 'config_thunder_v1_tsi.yaml'  # 'config_northstar_v1_tsi.yaml'
+    
+    program = 'E2E'
     config_file = 'config_e2e_v1_da_basic.yaml'
 
-    file_name = os.path.join(
-        Path(os.getcwd()).parent,
-        # os.path.dirname(
-        #     os.path.dirname(
-        #         os.getcwd())),
-        'data',
-        program,
-        'extracted_data',
-        'SDV_E2EML_M16_20251229_111748_0001_p01.mat')
+    # Dynamically find the project root (GPO_Data_Mining_Analysis/)
+    # CURRENT_DIR was defined at the top as Path(__file__).resolve().parent
+    PROJECT_ROOT = CURRENT_DIR.parents[2] 
+    
+    # Define your local data and config paths relative to project root
+    # This assumes your .mat file is in: GPO_Data_Mining_Analysis/data/E2E/extracted_data/
+    file_name = str(PROJECT_ROOT / 'data' / program / 'extracted_data' / 'SDV_E2EML_M16_20251229_111748_0001_p01.mat')
 
-    config_path = os.path.join(
-        Path(os.getcwd()).parent,
-        # os.path.dirname(
-        #     os.path.dirname(
-        #         os.getcwd())),
-        'data',
-        program,
-        config_file,
+    # This assumes your config is in: GPO_Data_Mining_Analysis/src/eventExtraction/data/E2E/
+    config_path = str(PROJECT_ROOT / 'src' / 'eventExtraction' / 'data' / program / config_file)
 
-    )
+    print(f"Loading data from: {file_name}")
+    print(f"Using config from: {config_path}")
 
+    # Core logic execution
     mat_file_data = loadmat(file_name)
-    TSI_core_logic_obj = coreEventExtractionDA(mat_file_data, file_name)
+    DA_core_logic_obj = coreEventExtractionDA(mat_file_data, file_name)
 
-    return_val_dict = TSI_core_logic_obj.main(config_path)
+    return_val_dict = DA_core_logic_obj.main(config_path)
 
     if "win" in sys.platform:
-
         return_val_dict_df = {key: pd.DataFrame(val)
-                              for key, val in return_val_dict.items()
-                              }
+                              for key, val in return_val_dict.items()}
+        print("Extraction complete. Results converted to DataFrames.")
 
+    # --- Performance Metrics ---
     mem_after_phy, mem_after_virtual = process_memory()
-
     end_time = time.time()
 
-    elapsed_time = secondsToStr(end_time-start_time)
-    consumed_memory_phy = (mem_after_phy - mem_before_phy)*1E-6
-    consumed_memory_virtual = (
-        mem_after_virtual - mem_before_virtual)*1E-6
+    elapsed_time = secondsToStr(end_time - start_time)
+    consumed_memory_phy = (mem_after_phy - mem_before_phy) * 1E-6
+    consumed_memory_virtual = (mem_after_virtual - mem_before_virtual) * 1E-6
 
-    print(
-        f'&&&&&&&&&&&& Elapsed time is {elapsed_time} %%%%%%%%%%%%%%%%')
-    print(
-        f'&&&&&&&&&&&& Consumed physical memory MB is {consumed_memory_phy} %%%%%%%%%%%%%%%%')
-
-    print(
-        f'&&&&&&&&&&&& Consumed virtual memory MB is {consumed_memory_virtual} %%%%%%%%%%%%%%%%')
+    print(f'\n' + '#' * 40)
+    print(f'Elapsed time: {elapsed_time}')
+    print(f'Consumed physical memory: {consumed_memory_phy:.2f} MB')
+    print(f'Consumed virtual memory: {consumed_memory_virtual:.2f} MB')
+    print('#' * 40)

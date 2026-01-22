@@ -1,0 +1,40 @@
+2026-01-22 14:38:20,294 [INFO] [34m============================== START PRODUCTION RUN ==============================[0m
+2026-01-22 14:38:20,295 [INFO] [34mSTEP 1: Processing SDV_E2EML_M16_20251206_165323_0000_merged.mat[0m
+2026-01-22 14:38:20,719 [INFO] Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2026-01-22 14:38:20,720 [INFO] NumExpr defaulting to 8 threads.
+2026-01-22 14:38:25,522 [WARNING] ldf is not supported
+2026-01-22 14:38:25,597 [WARNING] xls is not supported
+2026-01-22 14:38:29,661 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-22 14:38:31,347 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-22 14:38:33,178 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-22 14:38:34,785 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-22 14:38:36,432 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-22 14:38:43,857 [ERROR] ERROR: MATLAB type not supported: timetable, (uint32)
+2026-01-22 14:38:46,124 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-22 14:38:46,913 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-22 14:38:46,914 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-22 14:38:47,022 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-22 14:38:47,035 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-22 14:38:47,038 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-22 14:38:48,558 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-22 14:38:52,349 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-22 14:38:52,879 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-22 14:38:53,022 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-22 14:38:53,184 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-22 14:38:53,700 [INFO] STEP 2: Matching to Nexus Log - Seeking 'SDV_E2EML_M16_20251206_165323_0000'
+2026-01-22 14:38:54,901 [INFO] [32m  [FOUND] Match: 69389eef8bfb76983a757be1 | /mnt/data/m16-mach-e-airt/12062025/165323/SDV_E2EML_M16_20251206_165323_0000/20251206_165323/0000[0m
+2026-01-22 14:38:54,901 [INFO]   [BOUNDS] Nexus Start: 2025-12-07T00:53:22.999Z | End: 2025-12-07T00:54:22.999Z
+2026-01-22 14:38:54,903 [INFO] [36mSTEP 3: Verifying 4 extracted events[0m
+2026-01-22 14:38:55,671 [ERROR] {"errors":{"algorithm":{"name":"ValidatorError","message":"EventEmitterType set to algorithm, but no algorithm was set","properties":{"path":"algorithm","message":"EventEmitterType set to algorithm, but no algorithm was set","type":"user defined"},"kind":"user defined","path":"algorithm"}},"_message":"Event validation failed","name":"ValidationError","message":"Event validation failed: algorithm: EventEmitterType set to algorithm, but no algorithm was set"}
+2026-01-22 14:38:55,672 [ERROR]   [FAILURE] Upload error for DMA_LEFT_TURN: 400 Client Error: Bad Request for url: https://nexus.aptiv.com/api/events
+ValidationError: Event validation failed: algorithm: EventEmitterType set to algorithm, but no algorithm was set
+2026-01-22 14:38:55,673 [INFO] [34m
+============================== FINAL SUMMARY REPORT ==============================[0m
+2026-01-22 14:38:55,673 [INFO] Total Time:         0:00:35.379
+2026-01-22 14:38:55,673 [INFO] Files Processed:    1
+2026-01-22 14:38:55,674 [INFO] Events Extracted:   4
+2026-01-22 14:38:55,674 [INFO] [32mEvents Uploaded:    0[0m
+2026-01-22 14:38:55,674 [INFO] [33mEvents Out-of-Bound: 0[0m
+2026-01-22 14:38:55,675 [INFO] [31mTotal Errors:       1[0m
+2026-01-22 14:38:55,675 [INFO] Log file saved to:  C:\Users\thho0g\Downloads\TEST\EVENT-EXTRACTION\GPO_Data_Mining_Analysis\output\extraction_run_20260122_143819.log
+2026-01-22 14:38:55,676 [INFO] [34m================================================================================[0m

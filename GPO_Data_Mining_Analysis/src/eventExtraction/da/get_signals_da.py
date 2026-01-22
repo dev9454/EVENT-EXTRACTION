@@ -19,64 +19,32 @@ import numpy as np
 from geopy.distance import geodesic, lonlat, distance
 
 
-if __package__ is None:
+import sys
+import os
+from pathlib import Path
+from collections import OrderedDict
+from operator import itemgetter
+from collections.abc import Iterable
+import itertools
+import math
+import pandas as pd
+import numpy as np
+from geopy.distance import geodesic, lonlat, distance
 
-    print('Here at none package 1')
-    sys.path.insert(1, os.path.dirname(os.path.abspath(__file__)))
-    to_change_path = os.path.dirname(os.path.abspath(__file__))
-    actual_package_path = to_change_path
-    os.chdir(to_change_path)
-    print(f'Current dir 1: {os.getcwd()}, \n to change 1: {to_change_path}')
-    from signal_mapping_da import signalMapping
-    print('Here at none package 2')
-    sys.path.insert(1, os.path.dirname(
-        os.path.dirname(os.path.abspath(__file__))))
-    to_change_path = os.path.dirname(
-        os.path.dirname(os.path.abspath(__file__)))
-    os.chdir(to_change_path)
-    print(f'Current dir 2: {os.getcwd()}, to change 2: {to_change_path}')
+# --- Dynamic Path Resolution ---
+CURRENT_DIR = Path(__file__).resolve().parent
+PROJECT_SRC = str(CURRENT_DIR.parents[1])
 
-    from utils.utils_generic import (
-        loadmat,
-        _calc_derivative,
-        _get_bearing_from_lat_long,
+if PROJECT_SRC not in sys.path:
+    sys.path.insert(0, PROJECT_SRC)
 
-    )
-    os.chdir(actual_package_path)
-
-
-else:
-
-    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    to_change_path = os.path.dirname(os.path.abspath(__file__))
-    to_change_path = os.path.dirname(os.path.abspath(__file__))
-    os.chdir(to_change_path)
-    print(f'Current dir 1: {os.getcwd()}, to change 1: {to_change_path}')
-
-    from signal_mapping_da import signalMapping
-
-    sys.path.insert(0, os.path.dirname(
-        os.path.dirname(os.path.abspath(__file__))))
-    to_change_path = os.path.dirname(
-        os.path.dirname(os.path.abspath(__file__)))
-
-    os.chdir(to_change_path)
-    print(f'Current dir 2: {os.getcwd()}, to change 2: {to_change_path}')
-
-    # from .. import utils
-    try:
-        from eventExtraction.utils.utils_generic import (loadmat,
-                                                         _calc_derivative,
-                                                         _get_bearing_from_lat_long
-
-                                                         )
-    except:
-        from utils.utils_generic import (loadmat,
-                                         _calc_derivative,
-                                         _get_bearing_from_lat_long
-
-                                         )
-
+# Import sibling class and project utilities
+from signal_mapping_da import signalMapping
+from eventExtraction.utils.utils_generic import (
+    loadmat,
+    _calc_derivative,
+    _get_bearing_from_lat_long,
+)
 
 class signalData(signalMapping):
 

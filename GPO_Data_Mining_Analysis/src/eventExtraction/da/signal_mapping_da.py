@@ -10,57 +10,30 @@ import yaml
 import pandas as pd
 import sys
 from itertools import chain
+import sys
+import os
+from pathlib import Path
+import yaml
+import pandas as pd
+from itertools import chain
 
-if __package__ is None:
-    from os import path
-    print('Here at none package')
-    sys.path.insert(1, os.path.dirname(
-        os.path.dirname(os.path.abspath(__file__))))
-    to_change_path = os.path.dirname(
-        os.path.dirname(os.path.abspath(__file__)))
-    os.chdir(to_change_path)
-    print(f'Current dir: {os.getcwd()}, to change : {to_change_path}')
-    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-    sys.path.insert(1, str(Path(__file__).resolve().parent))
-    from utils.utils_generic import (read_platform,
-                                     loadmat,
-                                     merge_pandas_df,
-                                     stream_check,
-                                     transform_df,
-                                     _create_flat_file_list,
-                                     _create_base_name_list_from_file_list,
-                                     )
-    # from utils.mat73 import loadmat as loadmat_v7_3
-else:
+# --- Dynamic Path Resolution ---
+CURRENT_DIR = Path(__file__).resolve().parent
+PROJECT_SRC = str(CURRENT_DIR.parents[1]) # Points to 'src'
 
-    # from .. import utils
-    sys.path.insert(0, os.path.dirname(
-        os.path.dirname(os.path.abspath(__file__))))
-    to_change_path = os.path.dirname(
-        os.path.dirname(os.path.abspath(__file__)))
+if PROJECT_SRC not in sys.path:
+    sys.path.insert(0, PROJECT_SRC)
 
-    os.chdir(to_change_path)
-    print(f'Current dir *: {os.getcwd()}, \n to change *: {to_change_path}')
-    try:
-        from eventExtraction.utils.utils_generic import (read_platform,
-                                                         loadmat,
-                                                         merge_pandas_df,
-                                                         stream_check,
-                                                         transform_df,
-                                                         _create_flat_file_list,
-                                                         _create_base_name_list_from_file_list,
-                                                         )
-        # from eventExtraction.utils.mat73 import loadmat as loadmat_v7_3
-    except:
-        from utils.utils_generic import (read_platform,
-                                         loadmat,
-                                         merge_pandas_df,
-                                         stream_check,
-                                         transform_df,
-                                         _create_flat_file_list,
-                                         _create_base_name_list_from_file_list,
-                                         )
-        # from utils.mat73 import loadmat as loadmat_v7_3
+# --- Standardized Imports ---
+from eventExtraction.utils.utils_generic import (
+    read_platform,
+    loadmat,
+    merge_pandas_df,
+    stream_check,
+    transform_df,
+    _create_flat_file_list,
+    _create_base_name_list_from_file_list,
+)
 
 
 class signalMapping:
@@ -231,18 +204,20 @@ class signalMapping:
 
         return df, enums_dict
 
-
 if __name__ == '__main__':
 
     import warnings
     import os
-    from pathlib import Path
-    warnings.filterwarnings("ignore")
-
+    import sys
     import time
+    from pathlib import Path
     from functools import reduce
     import psutil
+    import pandas as pd
 
+    warnings.filterwarnings("ignore")
+
+    # --- Helper Functions ---
     def secondsToStr(t):
         return "%d:%02d:%02d.%03d" % \
             reduce(lambda ll, b: divmod(ll[0], b) + ll[1:],
@@ -253,52 +228,48 @@ if __name__ == '__main__':
         mem_info = process.memory_info()
         return mem_info.rss, mem_info.vms
 
+    # --- Start Execution ---
     start_time = time.time()
     mem_before_phy, mem_before_virtual = process_memory()
-    program = 'E2E'  # 'MCIP'  # 'Thunder'  # 'Northstar'
-    # 'config_thunder_v1_tsi.yaml'  # 'config_northstar_v1_tsi.yaml'
+
+    program = 'E2E'
     config_file = 'config_e2e_v1_da_basic.yaml'
 
-    file_name = os.path.join(
-        Path(os.getcwd()).parent.parent,
-        # os.path.dirname(
-        #     os.path.dirname(
-        #         os.getcwd())),
-        'data',
-        program,
-        'extracted_data',
-        'SDV_E2EML_M16_20251229_111748_0000_p01.mat')
+    # Dynamically resolve project structure
+    # CURRENT_DIR should be defined at the top of your file as:
+    # CURRENT_DIR = Path(__file__).resolve().parent
+    PROJECT_ROOT = CURRENT_DIR.parents[2] 
+    
+    # Path to local data folder (GPO_Data_Mining_Analysis/data/...)
+    file_name = str(PROJECT_ROOT / 'data' / program / 'extracted_data' / 'SDV_E2EML_M16_20251229_111748_0000_p01.mat')
 
-    config_path = os.path.join(
-        Path(os.getcwd()).parent.parent,
-        # os.path.dirname(
-        #     os.path.dirname(
-        #         os.getcwd())),
-        'data',
-        program,
-        config_file,
+    # Path to the config file (GPO_Data_Mining_Analysis/src/eventExtraction/data/...)
+    config_path = str(PROJECT_ROOT / 'src' / 'eventExtraction' / 'data' / program / config_file)
 
-    )
+    print(f"Executing with Config: {config_path}")
+    print(f"Loading Mat File: {file_name}")
 
+    # Initialize and Map Signals
     mat_file_data = loadmat(file_name)
-
     DA_signal_map_obj = signalMapping(mat_file_data, file_name)
 
     df, enums_dict = DA_signal_map_obj._signal_mapping(config_path)
 
-    mem_after_phy, mem_after_virtual = process_memory()
+    # Output results for verification
+    if "win" in sys.platform:
+        print("\nSuccessfully mapped signals. Preview of DataFrame:")
+        print(df.head())
 
+    # --- Performance Metrics ---
+    mem_after_phy, mem_after_virtual = process_memory()
     end_time = time.time()
 
-    elapsed_time = secondsToStr(end_time-start_time)
-    consumed_memory_phy = (mem_after_phy - mem_before_phy)*1E-6
-    consumed_memory_virtual = (
-        mem_after_virtual - mem_before_virtual)*1E-6
+    elapsed_time = secondsToStr(end_time - start_time)
+    consumed_memory_phy = (mem_after_phy - mem_before_phy) * 1E-6
+    consumed_memory_virtual = (mem_after_virtual - mem_before_virtual) * 1E-6
 
-    print(
-        f'&&&&&&&&&&&& Elapsed time is {elapsed_time} %%%%%%%%%%%%%%%%')
-    print(
-        f'&&&&&&&&&&&& Consumed physical memory MB is {consumed_memory_phy} %%%%%%%%%%%%%%%%')
-
-    print(
-        f'&&&&&&&&&&&& Consumed virtual memory MB is {consumed_memory_virtual} %%%%%%%%%%%%%%%%')
+    print('\n' + '#' * 50)
+    print(f'Elapsed time: {elapsed_time}')
+    print(f'Consumed physical memory: {consumed_memory_phy:.2f} MB')
+    print(f'Consumed virtual memory: {consumed_memory_virtual:.2f} MB')
+    print('#' * 50)
