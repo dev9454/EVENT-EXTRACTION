@@ -1,7 +1,0 @@
-name: dma_env
-channels:
-  - defaults
-  - https://repo.anaconda.com/pkgs/main
-  - https://repo.anaconda.com/pkgs/r
-  - https://repo.anaconda.com/pkgs/msys2
-prefix: C:\Users\thho0g\AppData\Local\anaconda3\envs\dma_env

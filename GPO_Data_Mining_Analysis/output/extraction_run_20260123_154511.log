@@ -1,0 +1,31 @@
+2026-01-23 15:45:12,291 [INFO] [34m============================== START PRODUCTION RUN ==============================[0m
+2026-01-23 15:45:12,292 [INFO] [34mSTEP 1: Processing SDV_E2EML_M7_20260103_090957_0020_merged.mat[0m
+2026-01-23 15:45:12,488 [INFO] NumExpr defaulting to 16 threads.
+2026-01-23 15:45:18,266 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 15:45:19,662 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 15:45:21,382 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 15:45:22,814 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 15:45:24,057 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 15:45:29,512 [ERROR] ERROR: MATLAB type not supported: timetable, (uint32)
+2026-01-23 15:45:31,042 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 15:45:31,559 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 15:45:31,560 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 15:45:31,625 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 15:45:31,632 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 15:45:31,633 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 15:45:32,583 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 15:45:32,905 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 15:45:33,014 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 15:45:33,129 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 15:45:33,772 [INFO] STEP 2: Matching to Nexus Log - Seeking 'SDV_E2EML_M7_20260103_090957_0020'
+2026-01-23 15:45:34,315 [WARNING] [31m  [FAIL] No log found matching: SDV_E2EML_M7_20260103_090957_0020[0m
+2026-01-23 15:45:34,315 [INFO] [34m
+============================== FINAL SUMMARY REPORT ==============================[0m
+2026-01-23 15:45:34,316 [INFO] Total Time:         0:00:22.023
+2026-01-23 15:45:34,316 [INFO] Files Processed:    1
+2026-01-23 15:45:34,316 [INFO] Events Extracted:   0
+2026-01-23 15:45:34,317 [INFO] [32mEvents Uploaded:    0[0m
+2026-01-23 15:45:34,317 [INFO] [33mEvents Out-of-Bound: 0[0m
+2026-01-23 15:45:34,317 [INFO] [32mTotal Errors:       0[0m
+2026-01-23 15:45:34,317 [INFO] Log file saved to:  C:\Users\thho0g\Downloads\TEST\EVENT-EXTRACTION\GPO_Data_Mining_Analysis\output\extraction_run_20260123_154511.log
+2026-01-23 15:45:34,318 [INFO] [34m================================================================================[0m

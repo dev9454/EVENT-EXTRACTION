@@ -1,0 +1,13 @@
+2026-01-23 15:02:22,749 [INFO] [34m============================== START PRODUCTION RUN ==============================[0m
+2026-01-23 15:02:22,751 [INFO] [34mSTEP 1: Processing SDV_E2EML_M7_20260103_090957_0020_merged.mat[0m
+2026-01-23 15:02:25,160 [ERROR] Critical processing error for SDV_E2EML_M7_20260103_090957_0020_merged.mat: No module named 'fxpmath'
+2026-01-23 15:02:25,161 [INFO] [34m
+============================== FINAL SUMMARY REPORT ==============================[0m
+2026-01-23 15:02:25,162 [INFO] Total Time:         0:00:02.412
+2026-01-23 15:02:25,162 [INFO] Files Processed:    1
+2026-01-23 15:02:25,162 [INFO] Events Extracted:   0
+2026-01-23 15:02:25,163 [INFO] [32mEvents Uploaded:    0[0m
+2026-01-23 15:02:25,163 [INFO] [33mEvents Out-of-Bound: 0[0m
+2026-01-23 15:02:25,163 [INFO] [31mTotal Errors:       1[0m
+2026-01-23 15:02:25,164 [INFO] Log file saved to:  C:\Users\thho0g\Downloads\TEST\EVENT-EXTRACTION\GPO_Data_Mining_Analysis\output\extraction_run_20260123_150221.log
+2026-01-23 15:02:25,164 [INFO] [34m================================================================================[0m

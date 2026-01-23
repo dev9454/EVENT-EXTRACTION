@@ -1,0 +1,12 @@
+2026-01-23 14:58:34,635 [INFO] [34m============================== START PRODUCTION RUN ==============================[0m
+2026-01-23 14:58:34,636 [ERROR] File not found: C:\Users\thho0g\Downloads\TEST\EVENT-EXTRACTION\GPO_Data_Mining_Analysis\data\E2E\extracted_data\SDV_E2EML_M16_20251206_165323_0000_merged.mat
+2026-01-23 14:58:34,637 [INFO] [34m
+============================== FINAL SUMMARY REPORT ==============================[0m
+2026-01-23 14:58:34,637 [INFO] Total Time:         0:00:00.001
+2026-01-23 14:58:34,638 [INFO] Files Processed:    0
+2026-01-23 14:58:34,638 [INFO] Events Extracted:   0
+2026-01-23 14:58:34,639 [INFO] [32mEvents Uploaded:    0[0m
+2026-01-23 14:58:34,639 [INFO] [33mEvents Out-of-Bound: 0[0m
+2026-01-23 14:58:34,640 [INFO] [32mTotal Errors:       0[0m
+2026-01-23 14:58:34,640 [INFO] Log file saved to:  C:\Users\thho0g\Downloads\TEST\EVENT-EXTRACTION\GPO_Data_Mining_Analysis\output\extraction_run_20260123_145833.log
+2026-01-23 14:58:34,640 [INFO] [34m================================================================================[0m

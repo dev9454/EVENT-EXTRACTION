@@ -153,7 +153,7 @@ def main():
     local_config = str(PROJECT_ROOT / "src" / "eventExtraction" / "data" / program / config_name)
 
     # Input file list
-    input_files = ["SDV_E2EML_M16_20251206_165323_0000_merged.mat"]
+    input_files = ["SDV_E2EML_M7_20260103_090957_0020_merged.mat"]
 
     pi = PSACInterface(url=SERVER_URL, user=NEXUS_EMAIL, pass_word=NEXUS_PASSWORD)
     extractor = FindDaGeneric()

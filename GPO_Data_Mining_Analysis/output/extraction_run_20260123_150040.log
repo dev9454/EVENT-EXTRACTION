@@ -1,0 +1,13 @@
+2026-01-23 15:00:41,260 [INFO] [34m============================== START PRODUCTION RUN ==============================[0m
+2026-01-23 15:00:41,261 [INFO] [34mSTEP 1: Processing SDV_E2EML_M7_20260103_090957_0020_merged.mat[0m
+2026-01-23 15:00:42,266 [ERROR] Critical processing error for SDV_E2EML_M7_20260103_090957_0020_merged.mat: No module named 'yaml'
+2026-01-23 15:00:42,267 [INFO] [34m
+============================== FINAL SUMMARY REPORT ==============================[0m
+2026-01-23 15:00:42,267 [INFO] Total Time:         0:00:01.007
+2026-01-23 15:00:42,268 [INFO] Files Processed:    1
+2026-01-23 15:00:42,268 [INFO] Events Extracted:   0
+2026-01-23 15:00:42,269 [INFO] [32mEvents Uploaded:    0[0m
+2026-01-23 15:00:42,269 [INFO] [33mEvents Out-of-Bound: 0[0m
+2026-01-23 15:00:42,270 [INFO] [31mTotal Errors:       1[0m
+2026-01-23 15:00:42,270 [INFO] Log file saved to:  C:\Users\thho0g\Downloads\TEST\EVENT-EXTRACTION\GPO_Data_Mining_Analysis\output\extraction_run_20260123_150040.log
+2026-01-23 15:00:42,270 [INFO] [34m================================================================================[0m

@@ -1,0 +1,14 @@
+2026-01-23 15:44:47,200 [INFO] [34m============================== START PRODUCTION RUN ==============================[0m
+2026-01-23 15:44:47,202 [INFO] [34mSTEP 1: Processing SDV_E2EML_M7_20260103_090957_0020_merged.mat[0m
+2026-01-23 15:44:47,377 [INFO] NumExpr defaulting to 16 threads.
+2026-01-23 15:44:52,230 [ERROR] Critical processing error for SDV_E2EML_M7_20260103_090957_0020_merged.mat: No module named 'macaddress'
+2026-01-23 15:44:52,231 [INFO] [34m
+============================== FINAL SUMMARY REPORT ==============================[0m
+2026-01-23 15:44:52,232 [INFO] Total Time:         0:00:05.031
+2026-01-23 15:44:52,232 [INFO] Files Processed:    1
+2026-01-23 15:44:52,233 [INFO] Events Extracted:   0
+2026-01-23 15:44:52,233 [INFO] [32mEvents Uploaded:    0[0m
+2026-01-23 15:44:52,233 [INFO] [33mEvents Out-of-Bound: 0[0m
+2026-01-23 15:44:52,233 [INFO] [31mTotal Errors:       1[0m
+2026-01-23 15:44:52,234 [INFO] Log file saved to:  C:\Users\thho0g\Downloads\TEST\EVENT-EXTRACTION\GPO_Data_Mining_Analysis\output\extraction_run_20260123_154446.log
+2026-01-23 15:44:52,234 [INFO] [34m================================================================================[0m

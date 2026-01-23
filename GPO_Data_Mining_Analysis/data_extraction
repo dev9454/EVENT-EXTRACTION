@@ -1,7 +1,7 @@
 #!/bin/bash
-# Get current script directory
+# Get current project directory
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-# Run Python directly from the environment
-# Replace 'username' with your teammate's actual Linux username
-/home/username/anaconda3/envs/dma_env/bin/python $DIR/scripts/E2E/exec.py "$@"
+# Run Python directly from the teammate's VM environment path
+# Replace 'teammate_user' with their actual Linux username
+/home/teammate_user/anaconda3/envs/dma_env/bin/python $DIR/scripts/E2E/exec.py "$@"

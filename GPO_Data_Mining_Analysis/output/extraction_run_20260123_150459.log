@@ -1,0 +1,13 @@
+2026-01-23 15:05:00,965 [INFO] [34m============================== START PRODUCTION RUN ==============================[0m
+2026-01-23 15:05:00,966 [INFO] [34mSTEP 1: Processing SDV_E2EML_M7_20260103_090957_0020_merged.mat[0m
+2026-01-23 15:05:05,238 [ERROR] Critical processing error for SDV_E2EML_M7_20260103_090957_0020_merged.mat: No module named 'sqlalchemy'
+2026-01-23 15:05:05,239 [INFO] [34m
+============================== FINAL SUMMARY REPORT ==============================[0m
+2026-01-23 15:05:05,239 [INFO] Total Time:         0:00:04.273
+2026-01-23 15:05:05,239 [INFO] Files Processed:    1
+2026-01-23 15:05:05,240 [INFO] Events Extracted:   0
+2026-01-23 15:05:05,240 [INFO] [32mEvents Uploaded:    0[0m
+2026-01-23 15:05:05,240 [INFO] [33mEvents Out-of-Bound: 0[0m
+2026-01-23 15:05:05,240 [INFO] [31mTotal Errors:       1[0m
+2026-01-23 15:05:05,241 [INFO] Log file saved to:  C:\Users\thho0g\Downloads\TEST\EVENT-EXTRACTION\GPO_Data_Mining_Analysis\output\extraction_run_20260123_150459.log
+2026-01-23 15:05:05,241 [INFO] [34m================================================================================[0m
