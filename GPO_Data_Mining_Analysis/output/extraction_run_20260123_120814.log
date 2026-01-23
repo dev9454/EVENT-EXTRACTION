@@ -1,0 +1,36 @@
+2026-01-23 12:08:14,704 [INFO] [34m============================== START PRODUCTION RUN ==============================[0m
+2026-01-23 12:08:14,705 [INFO] [34m
+STEP 1: Processing SDV_E2EML_M7_20260103_090957_0020_merged.mat[0m
+2026-01-23 12:08:14,963 [INFO] Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2026-01-23 12:08:14,963 [INFO] NumExpr defaulting to 8 threads.
+2026-01-23 12:08:17,619 [WARNING] ldf is not supported
+2026-01-23 12:08:17,661 [WARNING] xls is not supported
+2026-01-23 12:08:20,022 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:08:21,107 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:08:22,253 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:08:23,409 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:08:24,492 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:08:28,801 [ERROR] ERROR: MATLAB type not supported: timetable, (uint32)
+2026-01-23 12:08:29,981 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:08:30,412 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:08:30,413 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:08:30,465 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:08:30,475 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:08:30,477 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:08:31,299 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:08:31,616 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:08:31,704 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:08:31,798 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:08:32,065 [INFO] [32m[OUTPUT SAVED] C:\Users\thho0g\Downloads\TEST\EVENT-EXTRACTION\GPO_Data_Mining_Analysis\output\SDV_E2EML_M7_20260103_090957_0020_merged.json[0m
+2026-01-23 12:08:32,066 [INFO] STEP 2: Matching to Nexus Log - Seeking 'SDV_E2EML_M7_20260103_090957_0020'
+2026-01-23 12:08:32,683 [WARNING] [31m   [FAIL] No log found matching: SDV_E2EML_M7_20260103_090957_0020[0m
+2026-01-23 12:08:32,683 [INFO] [34m
+============================== FINAL SUMMARY REPORT ==============================[0m
+2026-01-23 12:08:32,683 [INFO] Total Time:         0:00:17.978
+2026-01-23 12:08:32,684 [INFO] Files Processed:    1
+2026-01-23 12:08:32,684 [INFO] Events Extracted:   0
+2026-01-23 12:08:32,685 [INFO] [32mEvents Uploaded:    0[0m
+2026-01-23 12:08:32,685 [INFO] [33mEvents Out-of-Bound: 0[0m
+2026-01-23 12:08:32,685 [INFO] [32mTotal Errors:       0[0m
+2026-01-23 12:08:32,686 [INFO] Log file saved to:  C:\Users\thho0g\Downloads\TEST\EVENT-EXTRACTION\GPO_Data_Mining_Analysis\output\extraction_run_20260123_120814.log
+2026-01-23 12:08:32,686 [INFO] [34m================================================================================[0m

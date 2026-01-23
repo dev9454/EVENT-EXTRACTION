@@ -1,0 +1,42 @@
+2026-01-23 12:14:44,412 [INFO] [34m============================== START PRODUCTION RUN ==============================[0m
+2026-01-23 12:14:44,415 [INFO] [34m
+STEP 1: Processing SDV_E2EML_M16_20251121_194142_0010_merged.mat[0m
+2026-01-23 12:14:44,631 [INFO] Note: NumExpr detected 16 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2026-01-23 12:14:44,632 [INFO] NumExpr defaulting to 8 threads.
+2026-01-23 12:14:47,131 [WARNING] ldf is not supported
+2026-01-23 12:14:47,173 [WARNING] xls is not supported
+2026-01-23 12:14:49,694 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:14:50,719 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:14:51,853 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:14:53,052 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:14:54,176 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:15:00,977 [ERROR] ERROR: MATLAB type not supported: timetable, (uint32)
+2026-01-23 12:15:02,493 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:15:03,022 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:15:03,024 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:15:03,085 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:15:03,086 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:15:03,986 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:15:04,086 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:15:04,196 [ERROR] ERROR: MATLAB type not supported: string, (uint32)
+2026-01-23 12:15:04,529 [INFO] [32m[OUTPUT SAVED] C:\Users\thho0g\Downloads\TEST\EVENT-EXTRACTION\GPO_Data_Mining_Analysis\output\SDV_E2EML_M16_20251121_194142_0010_merged.json[0m
+2026-01-23 12:15:04,530 [INFO] STEP 2: Matching to Nexus Log - Seeking 'SDV_E2EML_M16_20251121_194142_0010'
+2026-01-23 12:15:05,517 [INFO] [32m   [FOUND] Match: 692625d95c02916158f5b257 | /mnt/data/m16-mach-e/11212025/194142/SDV_E2EML_M16_20251121_194142_0010/20251121_194142/0010[0m
+2026-01-23 12:15:05,518 [INFO]    [BOUNDS] Nexus Window: 2025-11-22T03:51:41.983Z to 2025-11-22T03:52:41.999Z
+2026-01-23 12:15:05,518 [INFO] [36mSTEP 3: Verifying 2 events[0m
+2026-01-23 12:15:05,518 [INFO] 
+   Checking Event: [33mDMA_LEFT_TURN[0m
+2026-01-23 12:15:05,519 [INFO]       Script Start: 2025-11-22T03:51:42.001Z
+2026-01-23 12:15:05,519 [INFO]       Script End:   2025-11-22T03:52:41.993Z
+2026-01-23 12:15:05,519 [INFO] [32m      [IN BOUNDS] Verification successful.[0m
+2026-01-23 12:15:06,232 [INFO] [32m      [SUCCESS] Event created.[0m
+2026-01-23 12:15:06,232 [INFO] [34m
+============================== FINAL SUMMARY REPORT ==============================[0m
+2026-01-23 12:15:06,233 [INFO] Total Time:         0:00:21.819
+2026-01-23 12:15:06,233 [INFO] Files Processed:    1
+2026-01-23 12:15:06,233 [INFO] Events Extracted:   2
+2026-01-23 12:15:06,233 [INFO] [32mEvents Uploaded:    1[0m
+2026-01-23 12:15:06,234 [INFO] [33mEvents Out-of-Bound: 0[0m
+2026-01-23 12:15:06,234 [INFO] [32mTotal Errors:       0[0m
+2026-01-23 12:15:06,234 [INFO] Log file saved to:  C:\Users\thho0g\Downloads\TEST\EVENT-EXTRACTION\GPO_Data_Mining_Analysis\output\extraction_run_20260123_121443.log
+2026-01-23 12:15:06,234 [INFO] [34m================================================================================[0m
